@@ -2,6 +2,7 @@ import json
 
 from braces.views import GroupRequiredMixin
 from braces.views import LoginRequiredMixin
+from django.shortcuts import render
 from django.views.generic import TemplateView
 from main.pricing.helpers.get_daily_prices import get_daily_prices as gdp
 from oauth.constants import UserGroup
@@ -15,9 +16,9 @@ class DisplayDailyPriceView(LoginRequiredMixin, GroupRequiredMixin,TemplateView)
     redirect_unauthenticated_users = True
     template_name = "display_price.html"
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
 
         ticker = context['ticker']
         df = get_daily_price_df(ticker)

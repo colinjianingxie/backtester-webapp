@@ -98,8 +98,12 @@
 
     <script type="text/javascript">
         $.ajaxSetup({headers:{'X-CSRFToken': "{{ csrf_token }}"}})
+        var urls = {
+          "dashboard": "{% url 'dashboard'  %}",
+        }
     </script>
-
+    <script src="{% static 'js/api/api.js' %}"></script>
+    <script src="{% static 'js/api/daily_price.js' %}"></script>
     {% block extra_javascript %}
     {% endblock %}
 
