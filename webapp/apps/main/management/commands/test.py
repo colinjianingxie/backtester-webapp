@@ -1,19 +1,23 @@
+import datetime
 import os
 
 from django.core.management.base import BaseCommand
-from main.pricing.helpers.get_daily_prices import get_daily_prices
+from main.models import Backtest
+from main.models import BacktestResults
 from main.pricing.helpers.basic_input import call_basic_security_input
-#from main.pricing.helpers.lagged_series import create_lagged_series
-#from main.pricing.confusion_matrix import generate_confusion_matrix
+from main.pricing.helpers.get_daily_prices import get_daily_prices
 from main.pricing.var import perform_var
-import datetime
-
-
-from main.system.strategy import MovingAverageCrossStrategy, SPYDailyForecastStrategy
-from main.system.backtest import Backtest
+from main.system.backtest import Backtest as bt
 from main.system.data_handler import HistoricDataHandler
 from main.system.execution_handler import SimulatedExecutionHandler
-from main.system.portfolio import Portfolio, HFTPortfolio
+from main.system.portfolio import HFTPortfolio
+from main.system.portfolio import Portfolio
+from main.system.strategy import MovingAverageCrossStrategy
+from main.system.strategy import SPYDailyForecastStrategy
+#from main.pricing.helpers.lagged_series import create_lagged_series
+#from main.pricing.confusion_matrix import generate_confusion_matrix
+
+
 class Command(BaseCommand):
     """
     Testing
@@ -70,8 +74,8 @@ class Command(BaseCommand):
         initial_capital = 100000.0
         heartbeat = 0.0
         #symbol_list, initial_capital, heartbeat, start_date, end_date, data_handler, execution_handler, portfolio, strategy, csv_dir=None
-        
-        backtest = Backtest(
+        model_parameters = self.create_parameters(SPYDailyForecastStrategy.__name__)
+        backtest = bt(
             symbol_list=ticker_names,
             initial_capital=initial_capital,
             heartbeat=heartbeat,
@@ -79,6 +83,8 @@ class Command(BaseCommand):
             execution_handler=SimulatedExecutionHandler,
             portfolio=Portfolio,
             strategy=SPYDailyForecastStrategy,
-            custom_parameters=self.create_parameters(SPYDailyForecastStrategy.__name__)
+            custom_parameters=model_parameters
         )
+
+
         backtest.simulate_trading()

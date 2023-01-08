@@ -1,5 +1,6 @@
 from django.urls import path
 
+from .views import BacktestResultsView
 from .views import BacktestView
 from .views import DashboardView
 from .views import portal_redirect
@@ -14,4 +15,5 @@ urlpatterns = [
     #path('analysis/analysis_id=<str:analysis_id>', analysis.AnalysisView.as_view(), name='analysis'),
     #path('analysis/', analysis.AnalysisView.as_view(), name='analysis_redirect'),
     path('backtest/', BacktestView.as_view(), name='backtest'),
+    path('backtest_results/<str:id>', BacktestResultsView.as_view(), name='backtest_results'), # Need ID for backtest results
 ]

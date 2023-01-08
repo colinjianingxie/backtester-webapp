@@ -16,9 +16,7 @@ Including another URLconf
 from django.urls import path
 
 from .views import DisplayDailyPriceView
-from .views import GetDailyPriceView
 
 urlpatterns = [
     path('display_daily_price/<str:ticker>/', DisplayDailyPriceView.as_view(), name='display_daily_price'),
-    path('get_daily_price/<str:ticker>/', GetDailyPriceView.as_view(), name='get_daily_price'),
 ]
