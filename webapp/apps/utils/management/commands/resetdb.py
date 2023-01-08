@@ -26,14 +26,14 @@ class Command(BaseCommand):
                     if isfile(temp_file) and f != "__init__.py":
                         print(f"Successfully deleted: {str(temp_file)}")
                         os.remove(temp_file)
-        '''
+
         delete_db = input('Delete database file? y/N ')
         if delete_db == 'y' or delete_db == 'Y':
             with connection.cursor() as cursor:
                 cursor.execute("DROP SCHEMA public CASCADE;")
                 cursor.execute("CREATE SCHEMA public;")
-                os.system("python3 manage.py initdb")
-        '''
+                #os.system("python3 manage.py initdb")
+
         #os.system("python3 manage.py initdb")
         os.system("python3 manage.py makemigrations")
         os.system("python3 manage.py migrate")

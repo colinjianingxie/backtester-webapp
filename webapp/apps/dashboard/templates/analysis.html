@@ -1,0 +1,79 @@
+{% extends 'partials/dashboard/dashboard_base.html' %}
+{% load static %}
+{% block page-header %}
+Analysis
+{% endblock %}
+{% block main-path %}
+Dashboard
+{% endblock %}
+{% block sub-path %}
+Analysis
+{% endblock %}
+{% block contents %}
+
+
+
+<!-- end row -->
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Price</h4>
+
+                <div class="row">
+                    <div class="col-xl-3 col-sm-4">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar-sm">
+                                    <span class="avatar-title rounded-circle bg-warning bg-soft text-warning font-size-22">
+                                        <i class="mdi mdi-bitcoin"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="flex-grow-1">
+                                <p class="text-muted mb-2">{{selected_stock_ticker}}</p>
+                                <h5>1.02356</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-sm-4">
+                        <div class="mt-4 mt-sm-0">
+                            <p class="text-muted mb-2">In USD</p>
+                            <h5>6310.22 USD</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-sm-4">
+                        <div class="mt-4 mt-sm-0">
+                            <p class="text-muted mb-2">Last 24 hrs</p>
+                            <h5>0.24 % <i class="mdi mdi-arrow-up text-success"></i></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div id="stock-chart" class="apex-charts" dir="ltr"></div>
+                </div>
+                <div class="mt-4">
+                    <div id="line_chart_dashed" class="apex-charts" dir="ltr"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+
+
+{% endblock %}
+{% block extra_javascript %}
+    <script src="{% static 'libs/apexcharts/apexcharts.min.js' %}"></script>
+    <script>
+      {% autoescape off %}
+        {{line_chart}}.render()
+      {% endautoescape %}
+    </script>
+{% endblock %}

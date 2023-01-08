@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     "main",
     "securities_master",
     "securities_scraper",
+    "oauth",
+    "dashboard",
+    "rest_framework",
     "utils",
     'django.contrib.admin',
     "django.contrib.auth",
@@ -45,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -115,6 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
+AUTH_USER_MODEL = "oauth.Account"
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
@@ -133,6 +138,12 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     Path(BASE_DIR).joinpath("static")
 ]
+
+LOGIN_URL = "/oauth/accounts/login"  # Base Redirection
+LOGIN_REDIRECT_URL = (
+    "/dashboard/login_redirect_success"  # Redirect to home URL after login
+)
+LOGOUT_REDIRECT_URL = LOGIN_URL
 
 
 EMAIL_BACKEND = (

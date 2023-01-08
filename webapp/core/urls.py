@@ -20,5 +20,7 @@ from django.conf import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("main/", include("main.urls")),
+    path("oauth/", include("oauth.urls")),
     path("utils/", include("utils.urls")),
+    path("dashboard/", include("dashboard.urls")),
 ]
