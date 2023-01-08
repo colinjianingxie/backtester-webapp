@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "main",
+    "home",
     "securities_master",
     "securities_scraper",
     "oauth",

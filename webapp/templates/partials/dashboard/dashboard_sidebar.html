@@ -1,0 +1,67 @@
+{% load static %} {% block sidebar %}
+<!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+  <div data-simplebar class="h-100">
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+      <!-- Left Menu Start -->
+      <ul class="metismenu list-unstyled" id="side-menu">
+
+
+          <!-- begin li item -->
+          <li>
+            <a href="{% url 'dashboard'%}" class="waves-effect">
+              <i class="bx bx-home-circle"></i>
+              <span key="t-dashboards">Dashboards</span>
+            </a>
+          </li>
+          <!-- end li item -->
+
+
+          <!-- begin li item -->
+          <li>
+            <a href="{% url 'dashboard'%}" class="waves-effect">
+              <i class="bx bx-bitcoin"></i>
+              <span key="t-stocks">Analysis Settings</span>
+            </a>
+          </li>
+          <!-- end li item -->
+
+
+          <!-- begin li item -->
+          <li>
+            <a href="{% url 'dashboard' class="waves-effect">
+              <i class="bx bxs-bar-chart-alt-2"></i>
+              <span key="t-analysis">Analysis</span>
+            </a>
+          </li>
+          <!-- end li item -->
+
+
+          <!-- begin li item -->
+          <li>
+            <a href="{% url 'dashboard'%}" class="waves-effect">
+              <i class="bx bx-list-ul"></i>
+              <span key="t-back-tests">Back Tests</span>
+            </a>
+          </li>
+          <!-- end li item -->
+
+
+
+          <!-- begin li item -->
+          <li>
+            <a href="{% url 'logout'%}" class="waves-effect">
+              <i class="bx bx-user-circle"></i>
+              <span key="t-logout">Logout</span>
+            </a>
+          </li>
+          <!-- end li item -->
+
+      </ul>
+    </div>
+    <!-- Sidebar -->
+  </div>
+</div>
+<!-- Left Sidebar End -->
+{% endblock %}
