@@ -16,7 +16,6 @@ def convert_columns_to_date(df, column_names):
     return df
 
 def get_daily_price(ticker, start_date, end_date, values, vendor_name):
-
     queryset = DailyPrice.objects.filter(symbol=ticker, data_vendor__name=vendor_name, price_date__range=[start_date, end_date]).values(*values)
     df = pd.DataFrame.from_records(queryset)
     df.columns = values
@@ -25,6 +24,7 @@ def get_daily_price(ticker, start_date, end_date, values, vendor_name):
     df.set_index("price_date", inplace = True)
     df.index = pd.to_datetime(df.index)
     df.sort_index(inplace=True)
+
     return df
 
 def get_daily_prices(ticker_names, start_date, end_date, quick_extract=True, vendor_name='AlphaVantage'):

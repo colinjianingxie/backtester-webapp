@@ -1,4 +1,4 @@
-"""core URL Configuration
+"""main URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -13,16 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
+from django.urls import path
+
+from .views import GetDailyPriceView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("main/", include("main.urls")),
-    path("home/", include("home.urls")),
-    path("oauth/", include("oauth.urls")),
-    path("utils/", include("utils.urls")),
-    path("dashboard/", include("dashboard.urls")),
-    path("securities_master/", include("securities_master.urls")),
+    # http://localhost:8000/securities_master/get_daily_price/testticker?type=testtimeframe&start=%3D01-02-02&end=%3D12-32-21/
+    path('get_daily_price/<str:ticker>/', GetDailyPriceView.as_view(), name='get_daily_price'),
 ]
