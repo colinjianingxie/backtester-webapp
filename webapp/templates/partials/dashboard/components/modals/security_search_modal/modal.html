@@ -1,0 +1,30 @@
+{% block security_search_modal %}
+<!-- Modal -->
+<div class="modal fade securitySearchModal" tabindex="-1" role="dialog" aria-labelledby="securitySearchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="securitySearchModalLabel">Securities</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                  <div class="col-lg-12">
+                      <div class="card">
+                          <div class="card-body">
+                            {% block security_dropdown %}
+                            {% include 'partials/dashboard/components/dropdowns/security_dropdown/dropdown.html' %}
+                            {% endblock %}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+{% endblock %}

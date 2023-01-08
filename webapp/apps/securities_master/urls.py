@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.urls import path
 
+from .views import DisplayDailyPriceView
 from .views import GetDailyPriceView
 
 urlpatterns = [
-    # http://localhost:8000/securities_master/get_daily_price/testticker?type=testtimeframe&start=%3D01-02-02&end=%3D12-32-21/
+    path('display_daily_price/<str:ticker>/', DisplayDailyPriceView.as_view(), name='display_daily_price'),
     path('get_daily_price/<str:ticker>/', GetDailyPriceView.as_view(), name='get_daily_price'),
 ]

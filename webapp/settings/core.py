@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-import sys
 import os
+import sys
 from pathlib import Path
 
 
@@ -78,6 +78,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "utils.helper.load_template_variables.load_all_symbols",
             ],
         },
     },

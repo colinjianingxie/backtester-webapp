@@ -1,0 +1,40 @@
+{% load static %}
+
+{% block friend_row %}
+<tr>
+    <td>
+        <div>
+            <img class="rounded-circle avatar-xs" src="{% static 'images/users/avatar-3.jpg' %}" alt="">
+        </div>
+    </td>
+    <td>
+        <h5 class="font-size-14 mb-1"><a href="{% url 'profile' id=friend.id %}" class="text-dark">{{friend.display_name}}</a></h5>
+        <p class="text-muted mb-0">{{friend.username}}</p>
+    </td>
+    <td>
+        <div>
+        {% if friend in user.lobby_invitations_received.all %}
+        <a href="javascript: void(0);" data-account-id="{{friend.id}}" class="received-lobby badge badge-soft-primary font-size-11 m-1">accept invitation</a>
+        {% elif friend in user.lobby_invitations_sent.all %}
+        <a class="invite-sent-lobby badge badge-soft-primary font-size-11 m-1">invite sent</a>
+        {% else %}
+            {% if friend.accountmetadata.status == "AVAILABLE" %}
+            <a href="javascript: void(0);" data-account-id="{{friend.id}}" class="invite-lobby badge badge-soft-primary font-size-11 m-1">invite to lobby</a>
+            {% else %}
+            <a href="javascript: void(0);" class="accepted-lobby badge badge-soft-primary font-size-11 m-1">{{friend.accountmetadata.status}}</a>
+            {% endif %}
+        {% endif %}
+        </div>
+    </td>
+    <td>
+        <ul class="list-inline font-size-12 contact-links mb-0">
+            <li class="list-inline-item">
+              <a data-account-id="{{friend.id}}" title="Friend" class="accepted-friend badge badge-soft-primary font-size-11 m-1">Friend</a>
+            </li>
+            <li>
+              <a href="javascript: void(0);" data-account-id="{{friend.id}}" title="Unfriend" class="unfriend-friend badge badge-soft-primary font-size-11 m-1">Remove friend</a>
+            </li>
+        </ul>
+    </td>
+</tr>
+{% endblock %}
