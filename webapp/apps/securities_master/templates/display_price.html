@@ -11,6 +11,16 @@ Main
 {% endblock %}
 {% block contents %}
 
-SUP
+<div class="mt-4">
+    <div id="daily-price-chart" class="apex-charts" dir="ltr"></div>
+</div>
 
+{% endblock %}
+
+{% block extra_javascript %}
+    <script>
+      var dailyPriceData = "{{display_daily_price|safe}}"
+    </script>
+    <script src="{% static 'libs/apexcharts/apexcharts.min.js' %}"></script>
+    <script src="{% static 'js/dashboard/candle_stick.js' %}">
 {% endblock %}
