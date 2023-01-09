@@ -40,7 +40,6 @@ class BacktestResultAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "backtest",
-        "result",
         "status",
         "start_simulation_time",
         "end_simulation_time",
@@ -53,7 +52,6 @@ class BacktestResultAdmin(admin.ModelAdmin):
     readonly_fields = (
         "id",
         "backtest",
-        "result",
         "status",
         "start_simulation_time",
         "end_simulation_time",

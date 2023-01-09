@@ -84,14 +84,22 @@ class Backtest(models.Model):
         end_simulation_time=datetime.datetime.now()
         duration = end_simulation_time - start_simulation_time
         stats = results['stats']
+
         backtest_result = BacktestResult(
             backtest=self,
-            result=stats,
+            total_return=stats['total_return'],
+            sharpe_ratio=stats['sharpe_ratio'],
+            max_drawdown=stats['max_drawdown'],
+            drawdown_duration=stats['drawdown_duration'],
+            signals = stats['signals'],
+            orders = stats['orders'],
+            fills = stats['fills'],
             status="SUCCESS",
             start_simulation_time=start_simulation_time,
             end_simulation_time=end_simulation_time,
             duration=duration
             )
+
         backtest_result.save()
 
     def __str__(self):
@@ -104,7 +112,14 @@ class BacktestResult(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     backtest = models.ForeignKey(Backtest, on_delete=models.CASCADE)
-    result = JSONField(default={})
+    events = JSONField(default={})
+    total_return = models.DecimalField(max_digits=8, decimal_places=2)
+    sharpe_ratio = models.DecimalField(max_digits=8, decimal_places=2)
+    max_drawdown = models.DecimalField(max_digits=8, decimal_places=2)
+    drawdown_duration = models.DecimalField(max_digits=8, decimal_places=2)
+    signals = models.IntegerField()
+    orders = models.IntegerField()
+    fills = models.IntegerField()
     status = models.CharField(max_length=200)
     start_simulation_time = models.DateTimeField("start_simulation_time")
     end_simulation_time = models.DateTimeField("end_simulation_time")

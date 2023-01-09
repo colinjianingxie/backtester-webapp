@@ -1,7 +1,9 @@
 from datetime import datetime as dt
+
 import numpy as np
-from .strategy import Strategy
 from main.system.event import SignalEvent
+
+from .strategy import Strategy
 
 class MovingAverageCrossStrategy(Strategy):
 	"""
@@ -20,6 +22,7 @@ class MovingAverageCrossStrategy(Strategy):
 		self.bars = bars
 		self.symbol_list = self.bars.symbol_list
 		self.events = events
+		self.event_history = []
 		self.short_window = custom_parameters['model']['short_window']
 		self.long_window = custom_parameters['model']['long_window']
 		# Set to True if a symbol is in the market

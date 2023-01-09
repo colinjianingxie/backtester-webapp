@@ -43,6 +43,7 @@ class Portfolio(object):
 		"""
 		self.bars = bars
 		self.events = events
+		self.event_history = []
 		self.symbol_list = self.bars.symbol_list
 		self.start_date = custom_parameters['portfolio']['start_date']
 		self.initial_capital = initial_capital
@@ -199,6 +200,8 @@ class Portfolio(object):
 			order = OrderEvent(symbol, order_type, abs(cur_quantity), 'SELL')
 		if direction == 'EXIT' and cur_quantity < 0:
 			order = OrderEvent(symbol, order_type, abs(cur_quantity), 'BUY')
+
+		self.event_history.append(order)
 		return order
 
 

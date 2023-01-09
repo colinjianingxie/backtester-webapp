@@ -1,13 +1,13 @@
 from datetime import datetime as dt
 
 import pandas as pd
-
+from main.pricing.helpers.lagged_series import create_lagged_series
+from main.system.event import SignalEvent
 from sklearn.discriminant_analysis import (
 	QuadraticDiscriminantAnalysis as QDA
 )
+
 from .strategy import Strategy
-from main.system.event import SignalEvent
-from main.pricing.helpers.lagged_series import create_lagged_series
 
 
 class SPYDailyForecastStrategy(Strategy):
@@ -20,6 +20,7 @@ class SPYDailyForecastStrategy(Strategy):
 		self.bars = bars
 		self.symbol_list = self.bars.symbol_list
 		self.events = events
+		self.event_history = []
 		self.datetime_now = dt.utcnow()
 		self.model_start_date = custom_parameters['model']['start_date']#dt(2016,1,10)
 		self.model_end_date = custom_parameters['model']['end_date'] #dt(2017,12,31)

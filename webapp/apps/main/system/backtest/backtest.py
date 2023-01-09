@@ -119,9 +119,11 @@ class Backtest(object):
 		print(f"Signals: {self.signals}")
 		print(f"Orders: {self.orders}")
 		print(f"Fills: {self.fills}")
+		stats['signals'] = self.signals
+		stats['orders'] = self.orders
+		stats['fills'] = self.fills
 		return {
 			'stats': stats,
-			'equity_curve': self.portfolio.equity_curve
 		}
 
 
