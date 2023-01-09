@@ -1,0 +1,15 @@
+{% block backtest_stock_table %}
+<table class="table align-middle table-nowrap table-hover">
+    <thead class="table-light">
+        <tr>
+            <th scope="col" colspan="4">Securities</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for symbol in symbols.all %}
+            {% include 'partials/dashboard/components/dropdowns/backtest_stock_dropdown/backtest_stock_row.html' %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

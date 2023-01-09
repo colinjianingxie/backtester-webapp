@@ -1,2 +1,3 @@
 from .get_daily_price import GetDailyPriceView
+from .post_backtest_daily_price import PostBacktestDailyPriceView
 from .post_perform_backtest import PostPerformBacktestView

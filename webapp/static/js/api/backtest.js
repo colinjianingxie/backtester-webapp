@@ -50,3 +50,7 @@ $("#perform-backtest").click(function() {
 
     post_request(options)
 });
+
+$(".apply-backtest-daily-price").click(function() {
+
+});
