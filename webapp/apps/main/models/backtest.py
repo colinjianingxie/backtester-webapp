@@ -102,6 +102,13 @@ class Backtest(models.Model):
 
         backtest_result.save()
 
+        response_data = {
+            'backtest_id': str(self.id),
+            'backtest_result_id': str(backtest_result.id),
+        }
+        print(response_data)
+        return response_data
+
     def __str__(self):
         return f"{self.id}"
 

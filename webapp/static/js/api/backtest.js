@@ -1,3 +1,6 @@
+function go_to_result(response_data) {
+  window.location.href = `../backtest_result/${response_data.backtest_id}/${response_data.backtest_result_id}`;
+}
 $("#perform-backtest").click(function() {
     const start_date = '1998-01-02'
     const end_date = '2018-01-31'
@@ -42,7 +45,8 @@ $("#perform-backtest").click(function() {
         portfolio_start_date: portfolio_start_date,
       },
       success_url: urls.backtest_result,
+      data_function: go_to_result,
     }
-    console.log(options.body)
+
     post_request(options)
 });

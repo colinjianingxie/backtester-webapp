@@ -1,6 +1,8 @@
 import datetime
 import json
 
+from api.views.helper import api_response
+from api.views.helper import ResponseStatus
 from main.models import Backtest
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -98,4 +100,12 @@ class PostPerformBacktestView(APIView):
             )
             backtest.save()
 
-        backtest.perform_backtest()
+        backtest_ids = backtest.perform_backtest()
+
+        return api_response(
+            type='backtest',
+            view='post_perform_backtest',
+            status=ResponseStatus.SUCCESS.value,
+            message=f'successfully performed backtest',
+            data=backtest_ids
+        )

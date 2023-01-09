@@ -40,6 +40,13 @@ class BacktestResultAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "backtest",
+        "total_return",
+        "sharpe_ratio",
+        "max_drawdown",
+        "drawdown_duration",
+        "signals",
+        "orders",
+        "fills",
         "status",
         "start_simulation_time",
         "end_simulation_time",
