@@ -236,14 +236,20 @@ class Portfolio(object):
 		sharpe_ratio = create_sharpe_ratio(returns, periods=252)
 		drawdown, max_dd, dd_duration = create_drawdowns(pnl)
 		self.equity_curve['drawdown'] = drawdown
+		'''
 		stats = [
 			(f"Total Return: {(total_return - 1.0) * 100.0:.2f}%"),
 			(f"Sharpe Ratio: {sharpe_ratio:.2f}"),
 			(f"Max Drawdown: {max_dd * 100.0:.2f}%"),
 			(f"Drawdown Duration: {dd_duration:.2f}")
 		]
-
-		plot_performance(self.equity_curve)
+		'''
+		#plot_performance(self.equity_curve)
 
 		#self.equity_curve.to_csv(’equity.csv’)
-		return stats
+		return {
+			'total_return': (total_return - 1.0) * 100.0,
+			'sharpe_ratio': sharpe_ratio,
+			'max_drawdown': max_dd * 100.0,
+			'drawdown_duration': dd_duration,
+		}

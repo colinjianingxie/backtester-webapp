@@ -1,6 +1,6 @@
 import datetime
-from datetime import timedelta as td
 import pprint
+from datetime import timedelta as td
 try:
 	import Queue as queue
 except ImportError:
@@ -119,6 +119,10 @@ class Backtest(object):
 		print(f"Signals: {self.signals}")
 		print(f"Orders: {self.orders}")
 		print(f"Fills: {self.fills}")
+		return {
+			'stats': stats,
+			'equity_curve': self.portfolio.equity_curve
+		}
 
 
 	def simulate_trading(self):
@@ -126,4 +130,4 @@ class Backtest(object):
 		Simulates the backtest and outputs portfolio performance.
 		"""
 		self._run_backtest()
-		self._output_performance()
+		return self._output_performance()

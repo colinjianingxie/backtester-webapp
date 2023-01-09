@@ -1,3 +1,4 @@
+import datetime
 import json
 import uuid
 
@@ -34,31 +35,6 @@ class Backtest(models.Model):
     portfolio_start_date = models.DateTimeField("portfolio start date")
     created_date = models.DateTimeField("created date", auto_now_add=True)
 
-    def create_model_parameters(self):
-        if self.strategy == 'SPYDailyForecastStrategy':
-            '''
-            model_start_date = '2016-01-10'
-            model_end_date = '2017-12-31'
-            model_start_test_date = '2017-01-01'
-            model_start_date = datetime.datetime.strptime(model_start_date, "%Y-%m-%d")
-            model_end_date = datetime.datetime.strptime(model_end_date, "%Y-%m-%d")
-            model_start_test_date = datetime.datetime.strptime(model_start_test_date, "%Y-%m-%d")
-
-            return {
-                'start_date': model_start_date,
-                'end_date': model_end_date,
-                'start_test_date': model_start_test_date,
-            }
-            '''
-            return self.strategy_parameters
-        elif self.strategy == 'MovingAverageCrossStrategy':
-            '''
-            return {
-                'short_window': 100,
-                'long_window': 400,
-            }
-            '''
-            return self.strategy_parameters
     def create_backtest_parameters(self):
 
         return {
@@ -70,7 +46,7 @@ class Backtest(models.Model):
                 'end_date': self.data_end_date,
                 'vendor_name': 'Yahoo Finance'
             },
-            'model': self.create_model_parameters()
+            'model': self.strategy_parameters
         }
 
     def get_data_handler(self):
@@ -91,8 +67,8 @@ class Backtest(models.Model):
     def create_backtest(self):
         backtest = bt(
             symbol_list=self.symbol_list,
-            initial_capital=self.initial_capital,
-            heartbeat=self.heartbeat,
+            initial_capital=float(self.initial_capital),
+            heartbeat=float(self.heartbeat),
             data_handler=self.get_data_handler(),
             execution_handler=self.get_execution_handler(),
             portfolio=Portfolio,
@@ -103,13 +79,25 @@ class Backtest(models.Model):
 
     def perform_backtest(self):
         backtest = self.create_backtest()
+        start_simulation_time=datetime.datetime.now()
         results = backtest.simulate_trading()
-        return results
+        end_simulation_time=datetime.datetime.now()
+        duration = end_simulation_time - start_simulation_time
+        stats = results['stats']
+        backtest_result = BacktestResult(
+            backtest=self,
+            result=stats,
+            status="SUCCESS",
+            start_simulation_time=start_simulation_time,
+            end_simulation_time=end_simulation_time,
+            duration=duration
+            )
+        backtest_result.save()
 
     def __str__(self):
         return f"{self.id}"
 
-class BacktestResults(models.Model):
+class BacktestResult(models.Model):
     """
 
     """
@@ -117,8 +105,11 @@ class BacktestResults(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     backtest = models.ForeignKey(Backtest, on_delete=models.CASCADE)
     result = JSONField(default={})
-    run_date = models.DateTimeField("updated date", auto_now_add=True)
-    #run_duration = models.DateTimeField("created date", auto_now_add=True)
+    status = models.CharField(max_length=200)
+    start_simulation_time = models.DateTimeField("start_simulation_time")
+    end_simulation_time = models.DateTimeField("end_simulation_time")
+    duration = models.DurationField()
+    created_date = models.DateTimeField("created date", auto_now_add=True)
 
 
     def __str__(self):

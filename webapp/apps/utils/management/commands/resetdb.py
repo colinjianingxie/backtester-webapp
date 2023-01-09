@@ -1,10 +1,13 @@
-import os
 import glob
+import os
 import sys
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile
+from os.path import join
+
 from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
+from django.core.management.base import CommandError
 from django.db import connection
 
 class Command(BaseCommand):
@@ -32,9 +35,9 @@ class Command(BaseCommand):
             with connection.cursor() as cursor:
                 cursor.execute("DROP SCHEMA public CASCADE;")
                 cursor.execute("CREATE SCHEMA public;")
-                #os.system("python3 manage.py initdb")
 
-        #os.system("python3 manage.py initdb")
         os.system("python3 manage.py makemigrations")
         os.system("python3 manage.py migrate")
+
+        os.system("python3 manage.py initdb")
         os.system("python3 manage.py createaccs")

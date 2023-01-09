@@ -1,2 +1,2 @@
 from .backtest import Backtest
-from .backtest import BacktestResults
+from .backtest import BacktestResult

@@ -1,7 +1,8 @@
-from datetime import datetime as dt, timedelta as td
+from datetime import datetime as dt
+from datetime import timedelta as td
+
 import numpy as np
 import pandas as pd
-
 from main.pricing.helpers.get_daily_prices import get_daily_prices
 
 def create_lagged_series(ticker_name, start_date, end_date, lags=5, column_name='adj_close_price', additional_columns=['volume'], vendor_name='AlphaVantage'):
@@ -28,7 +29,10 @@ def create_lagged_series(ticker_name, start_date, end_date, lags=5, column_name=
 	'pd.DataFrame'
 	Contains the Adjusted Closing Price returns and lags
 	"""
-
+	if isinstance(start_date, str):
+		start_date = dt.strptime(start_date, "%Y-%m-%d")
+	if isinstance(start_date, str):
+		end_date = dt.strptime(end_date, "%Y-%m-%d")
 	adj_start_date = start_date - td(days=365)
 
 	daily_prices = get_daily_prices(ticker_names=ticker_name, start_date=adj_start_date, end_date=end_date, quick_extract=True, vendor_name=vendor_name)

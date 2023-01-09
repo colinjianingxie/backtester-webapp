@@ -2,7 +2,7 @@ from braces.views import GroupRequiredMixin
 from braces.views import LoginRequiredMixin
 from django.views.generic import TemplateView
 from main.models import Backtest
-from main.models import BacktestResults
+from main.models import BacktestResult
 from oauth.constants import UserGroup
 # User Access
 # Helpers
