@@ -251,8 +251,8 @@ class Portfolio(object):
 
 		#self.equity_curve.to_csv(’equity.csv’)
 		return {
-			'total_return': (total_return - 1.0) * 100.0,
+			'total_return': total_return,
 			'sharpe_ratio': sharpe_ratio,
-			'max_drawdown': max_dd * 100.0,
+			'max_drawdown': max_dd,
 			'drawdown_duration': dd_duration,
 		}

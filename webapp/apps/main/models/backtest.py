@@ -4,6 +4,7 @@ import uuid
 
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.utils.duration import duration_string
 from jsonfield import JSONField
 from main.system.backtest import Backtest as bt
 from main.system.data_handler import HistoricDataHandler
@@ -106,7 +107,7 @@ class Backtest(models.Model):
             'backtest_id': str(self.id),
             'backtest_result_id': str(backtest_result.id),
         }
-        print(response_data)
+
         return response_data
 
     def __str__(self):
@@ -133,6 +134,24 @@ class BacktestResult(models.Model):
     duration = models.DurationField()
     created_date = models.DateTimeField("created date", auto_now_add=True)
 
+    @property
+    def display_duration(self):
+        total_ms = self.duration.total_seconds() * 1000.0
+        return f"{total_ms:.2f}"
+
+    @property
+    def portfolio_balance_return(self):
+        return float(self.backtest.initial_capital) * (1.0 + float(self.total_return)/100.0)
+
+    @property
+    def display_portfolio_profit(self):
+        starting_capital = float(self.backtest.initial_capital)
+        profit = self.portfolio_balance_return - starting_capital
+        return f"{profit:.2f}"
+
+    @property
+    def display_portfolio_return(self):
+        return f"{self.portfolio_balance_return:.2f}"
 
     def __str__(self):
         return f"{self.id}"
