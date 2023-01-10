@@ -4,8 +4,12 @@ function go_to_result(response_data) {
 
 function closeBacktestStockPickerModal() {
   $('.backtestStockPickerModal').modal('hide');
-
 }
+
+window.onload = function() {
+  const ticker = $('#stock-label-0').data('ticker');
+  updateDailyPriceChart(ticker, testChart)
+};
 
 $("#perform-backtest").click(function() {
     const start_date = '1998-01-02'
@@ -70,8 +74,5 @@ $(".apply-backtest-daily-price").click(function() {
 
     post_request_template(options, "#backtest-stock-selection")
 
-    var chartOptions = {
-        api: `../../${urls.get_daily_price_coordinates_json}/${ticker}`,
-    }
-    get_chart_json(chartOptions, testChart)
+    updateDailyPriceChart(ticker, testChart)
 });

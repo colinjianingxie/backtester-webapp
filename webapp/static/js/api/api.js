@@ -65,7 +65,6 @@ function get_chart_json(options, chart){
     url:options.api,
     type: "GET",
     success:function(response){
-      console.log(response.data)
       chart.updateSeries([{
           data: response.data
       }])

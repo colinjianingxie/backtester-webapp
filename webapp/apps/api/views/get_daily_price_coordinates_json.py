@@ -13,12 +13,7 @@ class GetDailyPriceCoordinatesJSONView(APIView):
         return Response(content)
 
     def get_prices(self, ticker, request):
-        # TODO: Need better date handling
-        start_date = request.GET.get('start', "2019-01-01")
-        end_date = request.GET.get('end', "2019-01-10")
-        start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
-        end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
-        vendor_name = "Yahoo Finance"
+
         price_df = get_daily_price_df(ticker)
 
         res = [

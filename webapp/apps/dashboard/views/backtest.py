@@ -4,7 +4,6 @@ from django.views.generic import TemplateView
 from main.models import Backtest
 from main.models import BacktestResult
 from oauth.constants import UserGroup
-from securities_master.helpers.daily_prices import get_daily_price_df
 from securities_master.models import DailyPrice
 # User Access
 # Helpers
@@ -19,20 +18,8 @@ class BacktestView(LoginRequiredMixin, GroupRequiredMixin,TemplateView):
         context = super().get_context_data(**kwargs)
 
         default_random_dp = DailyPrice.objects.all().order_by('-price_date').first()
-
-        df = get_daily_price_df(default_random_dp.symbol.ticker)
-        res = [{
-            'date': index.strftime("%Y-%m-%d"),
-            'high': row['high_price'],
-            'low': row['low_price'],
-            'close': row['close_price'],
-            'adj_close': row['adj_close_price'],
-            'volume': row['volume'],
-            'open': row['open_price']} for index, row in df.iterrows()]
-
-
         context['backtest_selected_stock_0'] = default_random_dp
-        context['backtest_daily_price'] = res
+
         return context
 
 

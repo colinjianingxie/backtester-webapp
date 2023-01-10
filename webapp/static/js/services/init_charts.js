@@ -1,9 +1,4 @@
-function createCoordinate(data) {
-  return {
-    x: new Date(data.date),
-    y: [data.open, data.high, data.low, data.close]
-  }
-}
+
 
 var candleChartOptions = {
       series: [{data: []}],
@@ -35,3 +30,17 @@ var candleChartOptions = {
         text: 'Loading...'
       }
 };
+
+function createCoordinate(data) {
+  return {
+    x: new Date(data.date),
+    y: [data.open, data.high, data.low, data.close]
+  }
+}
+
+function updateDailyPriceChart(ticker, chartVariable) {
+  var chartOptions = {
+      api: `../../${urls.get_daily_price_coordinates_json}/${ticker}`,
+  }
+  get_chart_json(chartOptions, chartVariable)
+}
