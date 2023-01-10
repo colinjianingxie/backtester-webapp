@@ -74,6 +74,7 @@
         </div>
         <!-- end main content-->
 
+
         {% block security_search_modal %}
         {% include 'partials/dashboard/components/modals/security_search_modal/modal.html' %}
         {% endblock %}
@@ -81,13 +82,14 @@
         {% block backtest_stock_picker %}
         {% include 'partials/dashboard/components/modals/backtest_stock_picker/modal.html' %}
         {% endblock %}
-
     </div>
     <!-- END layout-wrapper -->
 
     {% block r_sidebar %}
     {% include 'partials/rightsidebar.html' %}
     {% endblock %}
+
+
 
     {% block javascript %}
     <!-- JAVASCRIPT -->

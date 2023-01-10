@@ -1,4 +1,3 @@
-
 // Candlestick chart
 // [[Timestamp], [O, H, L, C]]
 function createCoordinate(data) {
@@ -39,5 +38,4 @@ var options = {
         }
 };
 
-var chart = new ApexCharts(document.querySelector("#backtest-daily-price-chart"), options);
-chart.render();
+new ApexCharts(document.querySelector("#backtest-daily-price-chart"), options).render();

@@ -25,7 +25,8 @@ $("#perform-backtest").click(function() {
 
 
     const name="Test_bt2"
-    const symbol_list=['ZTS']
+    const ticker = $('#stock-label-0').data('ticker');
+    const symbol_list=[ticker]
     const initial_capital=100000.00
     const heartbeat=0.0
     const data_handler="HistoricDataHandler"
@@ -67,5 +68,5 @@ $(".apply-backtest-daily-price").click(function() {
       complete_function: closeBacktestStockPickerModal,
     }
 
-    post_request_template(options, "#backtest-stocks")
+    post_request_template(options, "#backtest-stock-selection")
 });

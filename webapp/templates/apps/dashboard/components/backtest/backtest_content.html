@@ -1,0 +1,18 @@
+{% load static %}
+{% block backtest-content %}
+
+<!-- end row -->
+{% endblock %}
+
+{% block extra_javascript %}
+
+    <script src="{% static 'js/api/backtest.js' %}"></script>
+
+
+    <script src="{% static 'libs/apexcharts/apexcharts.min.js' %}"></script>
+    <script>
+      var backtestDailyPriceData = "{{backtest_daily_price|safe}}"
+    </script>
+    <script src="{% static 'js/dashboard/backtest_charts.js' %}">
+
+{% endblock %}
