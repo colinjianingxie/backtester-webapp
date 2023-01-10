@@ -11,6 +11,18 @@ window.onload = function() {
   updateDailyPriceChart('../..', ticker, backtestPriceChart)
 };
 
+$("#initial-portfolio-value").ionRangeSlider({
+  skin:"square",
+  prefix:"$",
+  min:1,
+  max:100000,
+  from:100000,
+  onChange: function (data) {
+    $('#initial-backtest-value').text(`$${data.from}`);
+    $('#initial-backtest-value').data('initial-capital', data.from)
+  }
+})
+
 $("#perform-backtest").click(function() {
     const start_date = '1998-01-02'
     const end_date = '2018-01-31'
@@ -31,7 +43,7 @@ $("#perform-backtest").click(function() {
     const name="Test_bt2"
     const ticker = $('#stock-label-0').data('ticker');
     const symbol_list=[ticker]
-    const initial_capital=100000.00
+    const initial_capital= $('#initial-backtest-value').data('initial-capital')
     const heartbeat=0.0
     const data_handler="HistoricDataHandler"
     const execution_handler="SimulatedExecutionHandler"
