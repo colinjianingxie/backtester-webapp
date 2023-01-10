@@ -12,7 +12,7 @@ window.onload = function() {
 };
 
 $("#initial-portfolio-value").ionRangeSlider({
-  skin:"square",
+  skin:"flat",
   prefix:"$",
   min:1,
   max:100000,
@@ -23,22 +23,25 @@ $("#initial-portfolio-value").ionRangeSlider({
   }
 })
 
-$("#perform-backtest").click(function() {
-    const start_date = '1998-01-02'
-    const end_date = '2018-01-31'
-    const portfolio_start_date = '2017-01-03'
-
-    const strat_a = {
+const exampleStrategyObj = {
+    'SPYDailyForecastStrategy': {
+        'parameters': {
+          'start_date': '2016-01-10',
+          'end_date': '2017-12-31',
+          'start_test_date': '2017-01-01',
+        },
+    },
+    'MovingAverageCrossStrategy': {
+        'parameters': {
             'short_window': 100,
             'long_window': 400,
+        },
     }
-
-    const strat_b = {
-      'start_date': '2016-01-10',
-      'end_date': '2017-12-31',
-      'start_test_date': '2017-01-01',
-    }
-
+}
+$("#perform-backtest").click(function() {
+    const start_date = $("#backtest-data-start-date").val()
+    const end_date = $("#backtest-data-end-date").val()
+    const portfolio_start_date = $("#backtest-portfolio-start-date").val()
 
     const name="Test_bt2"
     const ticker = $('#stock-label-0').data('ticker');
@@ -48,8 +51,8 @@ $("#perform-backtest").click(function() {
     const data_handler="HistoricDataHandler"
     const execution_handler="SimulatedExecutionHandler"
     const portfolio="Portfolio"
-    const strategy="SPYDailyForecastStrategy"
-    //const strategy="MovingAverageCrossStrategy"
+    //const strategy="SPYDailyForecastStrategy"
+    const strategy="MovingAverageCrossStrategy"
 
     var options = {
       api: urls.perform_backtest,
@@ -62,7 +65,7 @@ $("#perform-backtest").click(function() {
         execution_handler: execution_handler,
         portfolio: portfolio,
         strategy: strategy,
-        strategy_parameters: JSON.stringify(strat_b),
+        strategy_parameters: JSON.stringify(exampleStrategyObj[strategy]['parameters']),
         data_start_date: start_date,
         data_end_date: end_date,
         portfolio_start_date: portfolio_start_date,
