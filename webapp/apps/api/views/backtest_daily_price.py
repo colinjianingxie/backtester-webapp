@@ -12,10 +12,9 @@ from securities_master.models import Symbol
 #from utils.helper import api_response
 #TODO: Possible race condition of sending requests at same time...
 
-class PostBacktestDailyPriceView(APIView):
+class BacktestDailyPriceView(APIView):
     """
     """
-
     def post(self, request):
 
         ticker = request.POST['ticker']

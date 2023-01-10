@@ -1,3 +1,4 @@
+from .backtest_daily_price import BacktestDailyPriceView
 from .get_daily_price import GetDailyPriceView
-from .post_backtest_daily_price import PostBacktestDailyPriceView
+from .get_daily_price_coordinates_json import GetDailyPriceCoordinatesJSONView
 from .post_perform_backtest import PostPerformBacktestView

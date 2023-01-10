@@ -99,7 +99,7 @@
     <script src="{% static 'libs/simplebar/simplebar.min.js' %}"></script>
     <script src="{% static 'libs/node-waves/waves.min.js' %}"></script>
     <!-- apexcharts -->
-
+    <script src="{% static 'libs/apexcharts/apexcharts.min.js' %}"></script>
     <!--<script src="{% static 'js/dashboard/candle_stick.js' %}"></script>-->
 
     <script type="text/javascript">
@@ -110,13 +110,13 @@
           "perform_backtest": "{% url 'perform_backtest'  %}",
           "backtest_result": "dashboard/backtest_result",
           "backtest_daily_price": "{% url 'backtest_daily_price'  %}",
+          "get_daily_price_coordinates_json": "api/get_daily_price_coordinates_json",
         }
     </script>
     <script src="{% static 'js/api/api.js' %}"></script>
     <script src="{% static 'js/api/daily_price.js' %}"></script>
-    {% block extra_javascript %}
-    {% endblock %}
-
+    <script src="{% static 'js/services/init_charts.js' %}"></script>
+    {% block extra_javascript %}{% endblock %}
     <script src="{% static 'js/app.js' %}"></script>
     {% endblock javascript %}
 </body>

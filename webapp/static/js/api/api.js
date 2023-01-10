@@ -48,8 +48,6 @@ function post_request_template(options, elementSelector){
       url:options.api,
       type: "POST",
       data: options.body,
-      traditional: true,
-      dataType: 'html',
       success:function(response){
           $(elementSelector).html(response);
           if ('complete_function' in options){
@@ -60,4 +58,20 @@ function post_request_template(options, elementSelector){
       },
       error:function (xhr, textStatus, thrownError){}
     });
+}
+
+function get_chart_json(options, chart){
+  $.ajax({
+    url:options.api,
+    type: "GET",
+    success:function(response){
+      console.log(response.data)
+      chart.updateSeries([{
+          data: response.data
+      }])
+    },
+    complete:function(){
+    },
+    error:function (xhr, textStatus, thrownError){}
+  });
 }

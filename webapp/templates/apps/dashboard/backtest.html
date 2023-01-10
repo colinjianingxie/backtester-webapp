@@ -97,11 +97,33 @@ Backtest
               </div>
           </div>
       </div>
-      <div class="col-xl-8" id="backtest-stock-selection">
-      {% block stock-selection %}
-      {% include 'apps/dashboard/components/backtest/stock_selection.html' %}
-      {% endblock %}
+      <div class="col-xl-8">
+          <div class="row">
+              <div id="backtest-stock-selection">
+              {% block stock-selection %}
+                  {% include 'apps/dashboard/components/backtest/stock_selection.html' %}
+              {% endblock %}
+              </div>
+              <div class="card">
+                  <div class="card-body">
+                      <h4 class="card-title mb-3">Overview</h4>
+                      <div class="apex-charts" id="backtest-daily-price-chart" dir="ltr"></div>
+                  </div>
+              </div>
+          </div>
       </div>
+
+      <div class="col-xl-8" id="backtest-stock-selection">
+          <div class="row">
+              <div class="card">
+                  <div class="card-body">
+                      <h4 class="card-title mb-3">Overview</h4>
+                      <div class="apex-charts" id="backtest-daily-price-chart" dir="ltr"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
   </div>
   <!-- end row -->
 
@@ -274,11 +296,8 @@ Backtest
 {% endblock %}
 {% block extra_javascript %}
 <script src="{% static 'js/api/backtest.js' %}"></script>
-
-
-<script src="{% static 'libs/apexcharts/apexcharts.min.js' %}"></script>
 <script>
-  var backtestDailyPriceData = "{{backtest_daily_price|safe}}"
+  var testChart = new ApexCharts(document.querySelector("#backtest-daily-price-chart"), candleChartOptions);
+  testChart.render();
 </script>
-<script src="{% static 'js/dashboard/backtest_charts.js' %}">
 {% endblock %}

@@ -69,4 +69,9 @@ $(".apply-backtest-daily-price").click(function() {
     }
 
     post_request_template(options, "#backtest-stock-selection")
+
+    var chartOptions = {
+        api: `../../${urls.get_daily_price_coordinates_json}/${ticker}`,
+    }
+    get_chart_json(chartOptions, testChart)
 });
