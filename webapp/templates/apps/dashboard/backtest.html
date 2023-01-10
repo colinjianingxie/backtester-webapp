@@ -297,8 +297,8 @@ Backtest
 {% block extra_javascript %}
 
 <script>
-    var testChart = new ApexCharts(document.querySelector("#backtest-daily-price-chart"), candleChartOptions);
-    testChart.render();
+    var backtestPriceChart = new ApexCharts(document.querySelector("#backtest-daily-price-chart"), candleChartOptions);
+    backtestPriceChart.render();
 </script>
 <script src="{% static 'js/api/backtest.js' %}"></script>
 {% endblock %}

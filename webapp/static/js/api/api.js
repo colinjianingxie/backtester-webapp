@@ -61,6 +61,7 @@ function post_request_template(options, elementSelector){
 }
 
 function get_chart_json(options, chart){
+  console.log(options.api)
   $.ajax({
     url:options.api,
     type: "GET",

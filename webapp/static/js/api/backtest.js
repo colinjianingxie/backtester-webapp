@@ -8,7 +8,7 @@ function closeBacktestStockPickerModal() {
 
 window.onload = function() {
   const ticker = $('#stock-label-0').data('ticker');
-  updateDailyPriceChart(ticker, testChart)
+  updateDailyPriceChart('../..', ticker, backtestPriceChart)
 };
 
 $("#perform-backtest").click(function() {
@@ -74,5 +74,5 @@ $(".apply-backtest-daily-price").click(function() {
 
     post_request_template(options, "#backtest-stock-selection")
 
-    updateDailyPriceChart(ticker, testChart)
+    updateDailyPriceChart('../..', ticker, backtestPriceChart)
 });

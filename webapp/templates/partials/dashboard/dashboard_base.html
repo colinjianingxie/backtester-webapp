@@ -104,7 +104,8 @@
 
     <script type="text/javascript">
         $.ajaxSetup({headers:{'X-CSRFToken': "{{ csrf_token }}"}})
-        var urls = {
+        const urls = {
+          "base": "{{ request.get_host }}",
           "dashboard": "{% url 'dashboard'  %}",
           "backtest": "{% url 'backtest'  %}",
           "perform_backtest": "{% url 'perform_backtest'  %}",

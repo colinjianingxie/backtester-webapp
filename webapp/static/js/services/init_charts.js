@@ -38,9 +38,10 @@ function createCoordinate(data) {
   }
 }
 
-function updateDailyPriceChart(ticker, chartVariable) {
+function updateDailyPriceChart(endpoint_base, ticker, chartVariable) {
+  // TODO: Try to get endpoint_base to be dynamic instead of hardcoded...
   var chartOptions = {
-      api: `../../${urls.get_daily_price_coordinates_json}/${ticker}`,
+      api: `${endpoint_base}/${urls.get_daily_price_coordinates_json}/${ticker}`,
   }
   get_chart_json(chartOptions, chartVariable)
 }
