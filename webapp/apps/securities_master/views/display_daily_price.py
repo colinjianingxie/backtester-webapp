@@ -4,7 +4,6 @@ from braces.views import GroupRequiredMixin
 from braces.views import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from main.pricing.helpers.get_daily_prices import get_daily_prices as gdp
 from oauth.constants import UserGroup
 from securities_master.helpers.daily_prices import get_daily_price_df
 # User Access

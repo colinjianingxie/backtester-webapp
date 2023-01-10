@@ -8,8 +8,11 @@
         </div>
     </td>
     <td>
-        <h5 class="font-size-14 mb-1"><a class="text-dark apply-backtest-daily-price" data-ticker="{{symbol.ticker}}">{{symbol.ticker}}</a></h5>
+        <h5 class="font-size-14 mb-1"><a class="text-dark" >{{symbol.ticker}}</a></h5>
         <p class="text-muted mb-0">{{symbol.name}}</p>
+    </td>
+    <td>
+      <button type="button" class="btn btn-primary apply-backtest-daily-price" data-ticker="{{symbol.ticker}}">Select</button>
     </td>
 </tr>
 {% endblock %}

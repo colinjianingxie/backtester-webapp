@@ -1,3 +1,4 @@
+
 function post_request(options){
     $.ajax({
       url:options.api,
@@ -33,6 +34,26 @@ function post_request(options){
           }
           else{
             //toastr["error"]("Something went wrong", "Error")
+          }
+      },
+      complete:function(){
+      },
+      error:function (xhr, textStatus, thrownError){}
+    });
+}
+
+
+function post_request_template(options, elementSelector){
+    $.ajax({
+      url:options.api,
+      type: "POST",
+      data: options.body,
+      traditional: true,
+      dataType: 'html',
+      success:function(response){
+          $(elementSelector).html(response);
+          if ('complete_function' in options){
+            options.complete_function();
           }
       },
       complete:function(){

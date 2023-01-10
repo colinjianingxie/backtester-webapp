@@ -9,8 +9,7 @@ function createCoordinate(data) {
 }
 
 backtestDailyPriceData = eval(backtestDailyPriceData)
-
-const backtestDailyPriceCoordinates = backtestDailyPriceData.map(createCoordinate);
+var backtestDailyPriceCoordinates = backtestDailyPriceData.map(createCoordinate);
 
 var options = {
     series: [{data: backtestDailyPriceCoordinates}],

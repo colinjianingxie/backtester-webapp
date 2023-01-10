@@ -9,4 +9,4 @@ class DashboardView(LoginRequiredMixin, GroupRequiredMixin,TemplateView):
     group_required = UserGroup.ADMIN.value
     raise_exception = True
     redirect_unauthenticated_users = True
-    template_name = "dashboard.html"
+    template_name = "apps/dashboard/dashboard.html"
