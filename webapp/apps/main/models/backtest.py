@@ -13,6 +13,7 @@ from main.system.portfolio import Portfolio
 from main.system.strategy.default.ml_forecast import MLForecast
 from main.system.strategy.default.moving_average_crossover import MovingAverageCrossover
 from oauth.models.user_model import Account
+from main.models.strategy import Strategy
 # Functions for actual backtesting
 
 class Backtest(models.Model):
@@ -29,7 +30,7 @@ class Backtest(models.Model):
     data_handler = models.CharField(max_length=200)
     execution_handler = models.CharField(max_length=200)
     portfolio = models.CharField(max_length=200)
-    strategy = models.CharField(max_length=200)
+    strategy = models.ForeignKey(Strategy, on_delete=models.CASCADE)
     strategy_parameters = JSONField(default={})
     data_start_date = models.DateTimeField("data start date")
     data_end_date = models.DateTimeField("data end date")
@@ -59,10 +60,9 @@ class Backtest(models.Model):
             return SimulatedExecutionHandler
 
     def get_strategy(self):
-        if self.strategy == 'MLForecast':
+        if self.strategy.name == 'MLForecast':
             return MLForecast
-
-        elif self.strategy == 'MovingAverageCrossover':
+        elif self.strategy.name == 'MovingAverageCrossover':
             return MovingAverageCrossover
 
     def create_backtest(self):

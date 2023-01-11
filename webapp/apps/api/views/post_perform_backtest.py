@@ -4,6 +4,7 @@ import json
 from api.views.helper import api_response
 from api.views.helper import ResponseStatus
 from main.models import Backtest
+from main.models import Strategy
 from rest_framework.response import Response
 from rest_framework.views import APIView
 #from utils.helper import api_response
@@ -60,6 +61,7 @@ class PostPerformBacktestView(APIView):
         portfolio_start_date):
 
         symbol_list = json.loads(symbol_list)
+        strategy_obj = Strategy.objects.all().filter(name=strategy).first()
         strategy_parameters = json.loads(strategy_parameters)
         data_start_date = datetime.datetime.strptime(data_start_date, "%Y-%m-%d")
         data_end_date = datetime.datetime.strptime(data_end_date, "%Y-%m-%d")
@@ -76,7 +78,7 @@ class PostPerformBacktestView(APIView):
                 data_handler=data_handler,
                 execution_handler=execution_handler,
                 portfolio=portfolio,
-                strategy=strategy,
+                strategy=strategy_obj,
                 strategy_parameters=strategy_parameters,
                 data_start_date = data_start_date,
                 data_end_date = data_end_date,
@@ -92,7 +94,7 @@ class PostPerformBacktestView(APIView):
                 data_handler=data_handler,
                 execution_handler=execution_handler,
                 portfolio=portfolio,
-                strategy=strategy,
+                strategy=strategy_obj,
                 strategy_parameters=strategy_parameters,
                 data_start_date = data_start_date,
                 data_end_date = data_end_date,
