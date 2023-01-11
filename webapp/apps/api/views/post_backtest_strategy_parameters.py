@@ -3,7 +3,7 @@ from api.views.helper import ResponseStatus
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-class PostBacktestStrategyParameterView(APIView):
+class PostBacktestStrategyParametersView(APIView):
     """
     """
     def post(self, request):
