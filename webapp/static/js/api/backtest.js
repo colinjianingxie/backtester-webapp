@@ -1,43 +1,4 @@
-function go_to_result(response_data) {
-  window.location.href = `../../${urls.backtest_result}/${response_data.backtest_id}/${response_data.backtest_result_id}`;
-}
 
-function closeBacktestStockPickerModal() {
-  $('.backtestStockPickerModal').modal('hide');
-}
-
-window.onload = function() {
-  const ticker = $('#stock-label-0').data('ticker');
-  updateDailyPriceChart('../..', ticker, backtestPriceChart)
-};
-
-$("#initial-portfolio-value").ionRangeSlider({
-  skin:"flat",
-  prefix:"$",
-  min:1,
-  max:100000,
-  from:100000,
-  onChange: function (data) {
-    $('#initial-backtest-value').text(`$${data.from}`);
-    $('#initial-backtest-value').data('initial-capital', data.from)
-  }
-})
-
-const exampleStrategyObj = {
-    'MLForecast': {
-        'parameters': {
-          'start_date': '2016-01-10',
-          'end_date': '2017-12-31',
-          'start_test_date': '2017-01-01',
-        },
-    },
-    'MovingAverageCrossover': {
-        'parameters': {
-            'short_window': 100,
-            'long_window': 400,
-        },
-    }
-}
 $("#perform-backtest").click(function() {
     const start_date = $("#backtest-data-start-date").val()
     const end_date = $("#backtest-data-end-date").val()
@@ -78,6 +39,7 @@ $("#perform-backtest").click(function() {
 });
 
 $(".apply-backtest-daily-price").click(function() {
+    // Refreshes stock picker...
     const ticker = $(this).data('ticker');
     var options = {
       api: urls.backtest_daily_price,
@@ -96,5 +58,16 @@ $(".selectStrategy").click(function() {
     const strategy = $(this).data('strategy');
     $('.strategySelectModal').modal('hide');
     $("#backtest-strategy-selected").html(strategy);
-    $("#backtest-strategy-selected").data('strategy', strategy)
+    $("#backtest-strategy-selected").data('strategy', strategy);
+
+    // Make API call to obtain strategy parameters...
+    var options = {
+      api: urls.post_backtest_strategy_parameter,
+      body: {
+        strategy: strategy,
+      },
+      complete_function: closeBacktestParameterModal,
+    }
+    post_request_template(options, "#strategy-parameter-body")
+
 });

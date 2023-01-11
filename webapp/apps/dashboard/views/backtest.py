@@ -21,8 +21,9 @@ class BacktestView(LoginRequiredMixin, GroupRequiredMixin,TemplateView):
         default_random_dp = DailyPrice.objects.all().order_by('-price_date').first()
 
         default_strategies = Strategy.objects.all()
+        default_random_strategy = default_strategies.first()
         context['backtest_selected_stock_0'] = default_random_dp
-        context['backtest_default_strategy'] = default_strategies.first()
+        context['backtest_default_strategy'] = default_random_strategy
         context['default_strategies'] = default_strategies
         return context
 

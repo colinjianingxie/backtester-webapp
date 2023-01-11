@@ -1,0 +1,22 @@
+{% block strategy_parameters_modal %}
+<!-- Modal -->
+<div class="modal fade strategyParametersModal" tabindex="-100" role="dialog" aria-labelledby="strategyParametersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="strategyParametersModalLabel">Parameters</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="strategy-parameter-body">
+            {% block strategy_parameter_card %}
+            {% include 'partials/dashboard/components/cards/strategy_parameter_cards/default_card.html' %}
+            {% endblock %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+{% endblock %}

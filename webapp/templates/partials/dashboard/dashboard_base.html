@@ -90,6 +90,10 @@
         {% include 'partials/dashboard/components/modals/strategy_select_modal/modal.html' %}
         {% endblock %}
 
+        {% block strategy_parameters_modal %}
+        {% include 'partials/dashboard/components/modals/strategy_parameters_modal/modal.html' %}
+        {% endblock %}
+
     </div>
     <!-- END layout-wrapper -->
 
@@ -122,6 +126,7 @@
           "backtest_result": "dashboard/backtest_result",
           "backtest_daily_price": "{% url 'backtest_daily_price'  %}",
           "get_daily_price_coordinates_json": "api/get_daily_price_coordinates_json",
+          "post_backtest_strategy_parameter": "{% url 'post_backtest_strategy_parameter' %}",
         }
     </script>
     <script src="{% static 'js/api/api.js' %}"></script>
