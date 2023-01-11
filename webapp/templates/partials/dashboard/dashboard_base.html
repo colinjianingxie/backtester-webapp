@@ -85,6 +85,11 @@
         {% block backtest_stock_picker %}
         {% include 'partials/dashboard/components/modals/backtest_stock_picker/modal.html' %}
         {% endblock %}
+
+        {% block strategy_select_modal %}
+        {% include 'partials/dashboard/components/modals/strategy_select_modal/modal.html' %}
+        {% endblock %}
+
     </div>
     <!-- END layout-wrapper -->
 
@@ -120,7 +125,6 @@
         }
     </script>
     <script src="{% static 'js/api/api.js' %}"></script>
-    <script src="{% static 'js/api/daily_price.js' %}"></script>
     <script src="{% static 'js/services/init_charts.js' %}"></script>
     {% block extra_javascript %}{% endblock %}
     <script src="{% static 'js/app.js' %}"></script>

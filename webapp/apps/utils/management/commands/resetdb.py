@@ -38,6 +38,5 @@ class Command(BaseCommand):
 
         os.system("python3 manage.py makemigrations")
         os.system("python3 manage.py migrate")
-
-        os.system("python3 manage.py initdb")
         os.system("python3 manage.py createaccs")
+        os.system("python3 manage.py initdb")

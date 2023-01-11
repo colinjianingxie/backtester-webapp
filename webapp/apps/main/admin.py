@@ -1,6 +1,7 @@
 from django.contrib import admin
 from main.models import Backtest
 from main.models import BacktestResult
+from main.models import Strategy
 
 class BacktestAdmin(admin.ModelAdmin):
     list_display = (
@@ -69,6 +70,29 @@ class BacktestResultAdmin(admin.ModelAdmin):
     list_filter = ()
     fieldsets = ()
 
+class StrategyAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "account",
+        "name",
+        "description",
+        "strategy_parameters",
+        "use_ml",
+    )  # What to display as columns in
+    search_fields = (
+    "id",
+    )
+    readonly_fields = (
+        "id",
+        "account",
+        "name",
+        "strategy_parameters",
+        "use_ml",
+    )
+    filter_horizontal = ()
+    list_filter = ()
+    fieldsets = ()
 
 admin.site.register(Backtest, BacktestAdmin)
 admin.site.register(BacktestResult, BacktestResultAdmin)
+admin.site.register(Strategy, StrategyAdmin)

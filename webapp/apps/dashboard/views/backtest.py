@@ -3,6 +3,7 @@ from braces.views import LoginRequiredMixin
 from django.views.generic import TemplateView
 from main.models import Backtest
 from main.models import BacktestResult
+from main.models import Strategy
 from oauth.constants import UserGroup
 from securities_master.models import DailyPrice
 # User Access
@@ -18,8 +19,11 @@ class BacktestView(LoginRequiredMixin, GroupRequiredMixin,TemplateView):
         context = super().get_context_data(**kwargs)
 
         default_random_dp = DailyPrice.objects.all().order_by('-price_date').first()
-        context['backtest_selected_stock_0'] = default_random_dp
 
+        default_strategies = Strategy.objects.all()
+        context['backtest_selected_stock_0'] = default_random_dp
+        context['backtest_default_strategy'] = default_strategies.first()
+        context['default_strategies'] = default_strategies
         return context
 
 

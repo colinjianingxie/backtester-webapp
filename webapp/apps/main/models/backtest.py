@@ -10,8 +10,8 @@ from main.system.backtest import Backtest as bt
 from main.system.data_handler import HistoricDataHandler
 from main.system.execution_handler import SimulatedExecutionHandler
 from main.system.portfolio import Portfolio
-from main.system.strategy import MovingAverageCrossStrategy
-from main.system.strategy import SPYDailyForecastStrategy
+from main.system.strategy.default.ml_forecast import MLForecast
+from main.system.strategy.default.moving_average_crossover import MovingAverageCrossover
 from oauth.models.user_model import Account
 # Functions for actual backtesting
 
@@ -59,11 +59,11 @@ class Backtest(models.Model):
             return SimulatedExecutionHandler
 
     def get_strategy(self):
-        if self.strategy == 'SPYDailyForecastStrategy':
-            return SPYDailyForecastStrategy
+        if self.strategy == 'MLForecast':
+            return MLForecast
 
-        elif self.strategy == 'MovingAverageCrossStrategy':
-            return MovingAverageCrossStrategy
+        elif self.strategy == 'MovingAverageCrossover':
+            return MovingAverageCrossover
 
     def create_backtest(self):
         backtest = bt(

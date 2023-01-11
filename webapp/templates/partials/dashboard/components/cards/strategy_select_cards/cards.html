@@ -1,0 +1,19 @@
+{% block strategy_select_cards %}
+    {% for strat in default_strategies %}
+    <div class="col-md-6 col-xl-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h4 class="card-title">{{strat.name}}</h4>
+                <p class="card-text">{{strat.description}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Default</li>
+                <li class="list-group-item">Machine Learning: {{strat.use_ml}}</li>
+            </ul>
+            <div class="card-body">
+                <a href="javascript: void(0);" class="card-link selectStrategy" data-strategy="{{strat.name}}">Select</a>
+            </div>
+        </div>
+    </div><!-- end col -->
+    {% endfor %}
+{% endblock %}
