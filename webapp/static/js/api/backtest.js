@@ -1,19 +1,25 @@
 
 $("#perform-backtest").click(function() {
+    const name="Test_bt2"
     const start_date = $("#backtest-data-start-date").val()
     const end_date = $("#backtest-data-end-date").val()
     const portfolio_start_date = $("#backtest-portfolio-start-date").val()
-
-    const name="Test_bt2"
     const ticker = $('#stock-label-0').data('ticker');
     const symbol_list=[ticker]
     const initial_capital= $('#initial-backtest-value').data('initial-capital')
+    const strategy= $("#backtest-strategy-selected").data('strategy')
+    var strategy_parameters = {};
     const heartbeat=0.0
     const data_handler="HistoricDataHandler"
     const execution_handler="SimulatedExecutionHandler"
     const portfolio="Portfolio"
-    //const strategy="SPYDailyForecastStrategy"
-    const strategy= $("#backtest-strategy-selected").data('strategy')
+
+    // TODO: Can probably use javascript's REDUCE function...
+    $("form#backtest-parameter-form :input").each(function(){
+        var parameter_name = $(this).data('parameter-name');
+        var parameter_value = $(this).val();
+        strategy_parameters[parameter_name] = parameter_value;
+    });
 
     var options = {
       api: urls.perform_backtest,
@@ -26,7 +32,7 @@ $("#perform-backtest").click(function() {
         execution_handler: execution_handler,
         portfolio: portfolio,
         strategy: strategy,
-        strategy_parameters: JSON.stringify(exampleStrategyObj[strategy]['parameters']),
+        strategy_parameters: JSON.stringify(strategy_parameters),
         data_start_date: start_date,
         data_end_date: end_date,
         portfolio_start_date: portfolio_start_date,
@@ -68,6 +74,6 @@ $(".selectStrategy").click(function() {
       },
       complete_function: closeBacktestParameterModal,
     }
-    post_request_template(options, "#strategy-parameter-body")
+    post_request_template(options, "#strategy-parameter-body");
 
 });

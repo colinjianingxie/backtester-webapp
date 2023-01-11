@@ -22,8 +22,8 @@ class MovingAverageCrossover(Strategy):
 		self.symbol_list = self.bars.symbol_list
 		self.events = events
 		self.event_history = []
-		self.short_window = custom_parameters['model']['short_window']
-		self.long_window = custom_parameters['model']['long_window']
+		self.short_window = int(custom_parameters['model']['short_window'])
+		self.long_window = int(custom_parameters['model']['long_window'])
 		# Set to True if a symbol is in the market
 		self.bought = self._calculate_initial_bought()
 

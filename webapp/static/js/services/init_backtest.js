@@ -15,22 +15,6 @@ function closeBacktestParameterModal() {
   $('.strategySelectModal').modal('hide');
 }
 
-const exampleStrategyObj = {
-    'MLForecast': {
-        'parameters': {
-          'start_date': '2016-01-10',
-          'end_date': '2017-12-31',
-          'start_test_date': '2017-01-01',
-        },
-    },
-    'MovingAverageCrossover': {
-        'parameters': {
-            'short_window': 100,
-            'long_window': 400,
-        },
-    }
-}
-
 $("#initial-portfolio-value").ionRangeSlider({
   skin:"flat",
   prefix:"$",
@@ -46,6 +30,7 @@ $("#initial-portfolio-value").ionRangeSlider({
 
 
 function updateStrategyParameterSelections(strategy_parameters){
+  console.log("{{backtest_default_strategy.strategy_parameters}}")
   for (const [parameterName, parameterType] of Object.entries(strategy_parameters)) {
     console.log(`${parameterName}: ${parameterType}`);
   }

@@ -7,8 +7,20 @@ DEFAULT_STRATEGIES = {
 						weighted moving average. Default short/long windows are 100 or 400 periods \
 						respectively.',
 		'parameters': {
-			'long_window': 'int',
-			'short_window': 'int',
+			'long_window': 'number',
+			'short_window': 'number',
+		},
+		'defaults': {
+			'long_window': 400,
+			'short_window': 100,
+		},
+		'min': {
+			'long_window': 300,
+			'short_window': 10,
+		},
+		'max': {
+			'long_window': 800,
+			'short_window': 300,
 		},
 		'use_ml': False,
 	},
@@ -21,6 +33,13 @@ DEFAULT_STRATEGIES = {
 			'model_end_date': 'date',
 			'model_start_test_date': 'date',
 		},
+		'defaults': {
+			'model_start_date': '2016-01-10',
+			'model_end_date': '2017-12-31',
+			'model_start_test_date': '2017-01-01'
+		},
+		'min': {},
+		'max': {},
 		'use_ml': True,
 	}
 }
@@ -47,6 +66,9 @@ def create_or_update_default_strategies():
 				name=name,
 				description=value['description'],
 				strategy_parameters=value['parameters'],
+				strategy_defaults=value['defaults'],
+				strategy_min=value['min'],
+				strategy_max=value['max'],
 				use_ml=value['use_ml'])
 		except Strategy.DoesNotExist:
 			strat = Strategy(
@@ -54,5 +76,8 @@ def create_or_update_default_strategies():
 				name=name,
 				description=value['description'],
 				strategy_parameters=value['parameters'],
+				strategy_defaults=value['defaults'],
+				strategy_min=value['min'],
+				strategy_max=value['max'],
 				use_ml=value['use_ml'])
 			strat.save()

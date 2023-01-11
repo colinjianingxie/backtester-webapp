@@ -81,6 +81,9 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "utils.helper.load_template_variables.load_all_symbols",
             ],
+            "libraries": {
+                'custom_tags': 'utils.helper.template_tags',
+            }
         },
     },
 ]

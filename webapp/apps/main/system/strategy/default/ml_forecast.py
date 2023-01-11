@@ -20,9 +20,9 @@ class MLForecast(Strategy):
 		self.events = events
 		self.event_history = []
 		self.datetime_now = dt.utcnow()
-		self.model_start_date = custom_parameters['model']['start_date']#dt(2016,1,10)
-		self.model_end_date = custom_parameters['model']['end_date'] #dt(2017,12,31)
-		self.model_start_test_date = custom_parameters['model']['start_test_date']
+		self.model_start_date = custom_parameters['model']['model_start_date']#dt(2016,1,10)
+		self.model_end_date = custom_parameters['model']['model_end_date'] #dt(2017,12,31)
+		self.model_start_test_date = custom_parameters['model']['model_start_test_date']
 		self.vendor_name = custom_parameters['data_handler']['vendor_name']
 		self.long_market = False
 		self.short_market = False

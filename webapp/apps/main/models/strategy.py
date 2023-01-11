@@ -15,7 +15,11 @@ class Strategy(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     strategy_parameters = JSONField(default={})
+    strategy_defaults = JSONField(default={})
+    strategy_min = JSONField(default={})
+    strategy_max = JSONField(default={})
     use_ml = models.BooleanField(default=False)
+
 
     def __str__(self):
         return f"{self.id}"
