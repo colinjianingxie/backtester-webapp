@@ -12,47 +12,54 @@
           <li>
             <a href="{% url 'dashboard'%}" class="waves-effect">
               <i class="bx bx-home-circle"></i>
-              <span key="t-dashboards">Dashboards</span>
+              <span key="t-dashboards">Dashboard</span>
             </a>
           </li>
           <!-- end li item -->
+
+          <!-- begin li item -->
+          <li>
+            <a href="{% url 'forum'%}" class="waves-effect">
+              <i class="bx bx-detail"></i>
+              <span key="t-stocks">Forum</span>
+            </a>
+          </li>
+          <!-- end li item -->
+
 
 
           <!-- begin li item -->
           <li>
-            <a href="{% url 'dashboard'%}" class="waves-effect">
-              <i class="bx bx-bitcoin"></i>
-              <span key="t-stocks">Analysis Settings</span>
+            <a href="{% url 'backtest_history'%}"  class="waves-effect">
+              <i class="bx bx-stats"></i>
+              <span key="t-analysis">Backtest History</span>
             </a>
           </li>
           <!-- end li item -->
-
-
-          <!-- begin li item -->
-          <li>
-            <a href="{% url 'dashboard'%}"  class="waves-effect">
-              <i class="bx bxs-bar-chart-alt-2"></i>
-              <span key="t-analysis">Analysis</span>
-            </a>
-          </li>
-          <!-- end li item -->
-
 
           <!-- begin li item -->
           <li>
             <a href="{% url 'backtest'%}" class="waves-effect">
-              <i class="bx bx-list-ul"></i>
-              <span key="t-back-tests">Back Tests</span>
+              <i class="bx bx-slider-alt"></i>
+              <span key="t-back-tests">Create Backtest</span>
             </a>
           </li>
           <!-- end li item -->
 
+          <!-- begin li item -->
+          <li>
+            <a href="{% url 'explore'%}" class="waves-effect">
+              <i class="bx bx-news"></i>
+              <span key="t-stocks">Explore Strategies</span>
+            </a>
+          </li>
+          <!-- end li item -->
 
 
           <!-- begin li item -->
           <li>
             <a href="{% url 'logout'%}" class="waves-effect">
-              <i class="bx bx-user-circle"></i>
+              <i class="bx bx-exit"></i>
               <span key="t-logout">Logout</span>
             </a>
           </li>
