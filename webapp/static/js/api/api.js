@@ -1,5 +1,8 @@
 
 function post_request(options){
+    if ('start_function' in options) {
+      options.start_function();
+    }
     $.ajax({
       url:options.api,
       type: "POST",
@@ -36,7 +39,10 @@ function post_request(options){
             //toastr["error"]("Something went wrong", "Error")
           }
       },
-      complete:function(){
+      complete:function() {
+        if ('complete_function' in options){
+          options.complete_function();
+        }
       },
       error:function (xhr, textStatus, thrownError){}
     });

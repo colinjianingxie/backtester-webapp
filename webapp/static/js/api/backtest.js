@@ -14,6 +14,8 @@ $("#perform-backtest").click(function() {
     const execution_handler="SimulatedExecutionHandler"
     const portfolio="Portfolio"
 
+    const beforeText = 'Perform Backtest'
+    const loaderText = '<i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i> Loading';
     // TODO: Can probably use javascript's REDUCE function...
     $("form#backtest-parameter-form :input").each(function(){
         var parameter_name = $(this).data('parameter-name');
@@ -39,9 +41,12 @@ $("#perform-backtest").click(function() {
       },
       success_url: urls.backtest_result,
       data_function: go_to_result,
+      complete_function: function(){$('#perform-backtest').html(beforeText);},
+      start_function: function(){$('#perform-backtest').html(loaderText);},
     }
 
-    post_request(options)
+    post_request(options);
+
 });
 
 $(".apply-backtest-daily-price").click(function() {
