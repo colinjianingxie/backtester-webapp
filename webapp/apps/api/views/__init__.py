@@ -1,4 +1,5 @@
 from .backtest_daily_price import BacktestDailyPriceView
+from .display_daily_price import DisplayDailyPriceView
 from .get_daily_price import GetDailyPriceView
 from .get_daily_price_coordinates_json import GetDailyPriceCoordinatesJSONView
 from .post_backtest_strategy_parameters import PostBacktestStrategyParametersView

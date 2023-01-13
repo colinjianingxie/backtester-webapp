@@ -13,7 +13,7 @@ class DisplayDailyPriceView(LoginRequiredMixin, GroupRequiredMixin,TemplateView)
     group_required = UserGroup.ADMIN.value
     raise_exception = True
     redirect_unauthenticated_users = True
-    template_name = "display_price.html"
+    template_name = "apps/api/display_price.html"
 
 
     def get_context_data(self, **kwargs):

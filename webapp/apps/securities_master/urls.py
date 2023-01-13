@@ -15,8 +15,5 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import DisplayDailyPriceView
-
 urlpatterns = [
-    path('display_daily_price/<str:ticker>/', DisplayDailyPriceView.as_view(), name='display_daily_price'),
 ]
