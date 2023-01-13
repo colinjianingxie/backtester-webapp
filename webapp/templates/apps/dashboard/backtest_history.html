@@ -21,8 +21,8 @@ Backtest
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#all-order" role="tab">
-                            All Orders
+                        <a class="nav-link active" data-bs-toggle="tab" href="#all-backtests" role="tab">
+                            All Backtests
                         </a>
                     </li>
                     <li class="nav-item">
@@ -34,7 +34,7 @@ Backtest
 
                 <!-- Tab panes -->
                 <div class="tab-content p-3">
-                    <div class="tab-pane active" id="all-order" role="tabpanel">
+                    <div class="tab-pane active" id="all-backtests" role="tabpanel">
                         <form>
                             <div class="row">
 
@@ -47,7 +47,7 @@ Backtest
 
                                 <div class="col-xl col-sm-6">
                                     <div class="form-group mt-3 mb-0">
-                                        <label>Coin</label>
+                                        <label>Equities</label>
                                         <select class="form-control select2-search-disable">
                                             <option value="BTC" selected>Bitcoin</option>
                                             <option value="ETH">Ethereum</option>
@@ -78,7 +78,7 @@ Backtest
 
                                 <div class="col-xl col-sm-6 align-self-end">
                                     <div class="mt-3">
-                                        <button type="button" class="btn btn-primary w-md">Add Order</button>
+                                        <button type="button" class="btn btn-primary w-md">Filter</button>
                                     </div>
                                 </div>
                             </div>
@@ -89,147 +89,32 @@ Backtest
                                 <thead>
                                     <tr>
                                         <th scope="col">Date</th>
-                                        <th scope="col">Type</th>
-                                        <th scope="col">Coin</th>
-                                        <th scope="col">Value</th>
-                                        <th scope="col">Value in USD</th>
-                                        <th scope="col">Status</th>
+                                        <th scope="col">Strategy</th>
+                                        <th scope="col">Equities</th>
+                                        <th scope="col">Total Return</th>
+                                        <th scope="col">Sharpe Ratio</th>
+                                        <th scope="col">Max Drawdown</th>
+                                        <th scope="col">Drawdown Duration</th>
+                                        <th scope="col">Backtest duration</th>
                                     </tr>
 
                                 </thead>
 
                                 <tbody>
+                                   {% for backtest_result in backtest_results %}
                                     <tr>
-                                        <td>03 Mar, 2020</td>
-                                        <td>Buy</td>
-                                        <td>Bitcoin</td>
-                                        <td>1.00952 BTC</td>
-                                        <td>$ 9067.62</td>
+                                        <td>{{backtest_result.created_date}}</td>
+                                        <td>{{backtest_result.backtest.strategy.name}}</td>
+                                        <td>{{backtest_result.backtest.symbol_list}}</td>
+                                        <td>{{backtest_result.total_return}}</td>
+                                        <td>{{backtest_result.sharpe_ratio}}</td>
+                                        <td>{{backtest_result.max_drawdown}}</td>
+                                        <td>{{backtest_result.drawdown_duration}}</td>
                                         <td>
-                                            <span class="badge bg-success font-size-10">Completed</span>
+                                            <span class="badge bg-success font-size-10">{{backtest_result.display_duration}} ms</span>
                                         </td>
                                     </tr>
-
-                                    <tr>
-                                        <td>04 Mar, 2020</td>
-                                        <td>Sell</td>
-                                        <td>Ethereum</td>
-                                        <td>0.00413 ETH</td>
-                                        <td>$ 2123.01</td>
-                                        <td>
-                                            <span class="badge bg-success font-size-10">Completed</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>04 Mar, 2020</td>
-                                        <td>Buy</td>
-                                        <td>Bitcoin</td>
-                                        <td>0.00321 BTC</td>
-                                        <td>$ 1802.62</td>
-                                        <td>
-                                            <span class="badge bg-warning font-size-10">Pending</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>05 Mar, 2020</td>
-                                        <td>Buy</td>
-                                        <td>Litecoin</td>
-                                        <td>0.00224 LTC</td>
-                                        <td>$ 1773.01</td>
-                                        <td>
-                                            <span class="badge bg-success font-size-10">Completed</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>06 Mar, 2020</td>
-                                        <td>Buy</td>
-                                        <td>Ethereum</td>
-                                        <td>1.04321 ETH</td>
-                                        <td>$ 9423.73</td>
-                                        <td>
-                                            <span class="badge bg-danger font-size-10">Failed</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>07 Mar, 2020</td>
-                                        <td>Sell</td>
-                                        <td>Bitcoin</td>
-                                        <td>0.00413 ETH</td>
-                                        <td>$ 2123.01</td>
-                                        <td>
-                                            <span class="badge bg-success font-size-10">Completed</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>07 Mar, 2020</td>
-                                        <td>Buy</td>
-                                        <td>Bitcoin</td>
-                                        <td>1.00952 BTC</td>
-                                        <td>$ 9067.62</td>
-                                        <td>
-                                            <span class="badge bg-warning font-size-10">Pending</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>08 Mar, 2020</td>
-                                        <td>Sell</td>
-                                        <td>Ethereum</td>
-                                        <td>0.00413 ETH</td>
-                                        <td>$ 2123.01</td>
-                                        <td>
-                                            <span class="badge bg-success font-size-10">Completed</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>09 Mar, 2020</td>
-                                        <td>Sell</td>
-                                        <td>Litecoin</td>
-                                        <td>1.00952 LTC</td>
-                                        <td>$ 9067.62</td>
-                                        <td>
-                                            <span class="badge bg-success font-size-10">Completed</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>10 Mar, 2020</td>
-                                        <td>Buy</td>
-                                        <td>Ethereum</td>
-                                        <td>0.00413 ETH</td>
-                                        <td>$ 2123.01</td>
-                                        <td>
-                                            <span class="badge bg-warning font-size-10">Pending</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>11 Mar, 2020</td>
-                                        <td>Buy</td>
-                                        <td>Ethereum</td>
-                                        <td>1.04321 ETH</td>
-                                        <td>$ 9423.73</td>
-                                        <td>
-                                            <span class="badge bg-success font-size-10">Completed</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>12 Mar, 2020</td>
-                                        <td>Sell</td>
-                                        <td>Bitcoin</td>
-                                        <td>0.00413 ETH</td>
-                                        <td>$ 2123.01</td>
-                                        <td>
-                                            <span class="badge bg-success font-size-10">Completed</span>
-                                        </td>
-                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -251,137 +136,7 @@ Backtest
                                     </thead>
 
                                     <tbody>
-                                        <tr>
-                                            <td>03 Mar, 2020</td>
-                                            <td>Buy</td>
-                                            <td>Bitcoin</td>
-                                            <td>1.00952 BTC</td>
-                                            <td>$ 9067.62</td>
-                                            <td>
-                                                <span class="badge bg-success font-size-10">Completed</span>
-                                            </td>
-                                        </tr>
 
-                                        <tr>
-                                            <td>04 Mar, 2020</td>
-                                            <td>Sell</td>
-                                            <td>Ethereum</td>
-                                            <td>0.00413 ETH</td>
-                                            <td>$ 2123.01</td>
-                                            <td>
-                                                <span class="badge bg-success font-size-10">Completed</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>04 Mar, 2020</td>
-                                            <td>Buy</td>
-                                            <td>Bitcoin</td>
-                                            <td>0.00321 BTC</td>
-                                            <td>$ 1802.62</td>
-                                            <td>
-                                                <span class="badge bg-warning font-size-10">Pending</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>05 Mar, 2020</td>
-                                            <td>Buy</td>
-                                            <td>Litecoin</td>
-                                            <td>0.00224 LTC</td>
-                                            <td>$ 1773.01</td>
-                                            <td>
-                                                <span class="badge bg-success font-size-10">Completed</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>06 Mar, 2020</td>
-                                            <td>Buy</td>
-                                            <td>Ethereum</td>
-                                            <td>1.04321 ETH</td>
-                                            <td>$ 9423.73</td>
-                                            <td>
-                                                <span class="badge bg-danger font-size-10">Failed</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>07 Mar, 2020</td>
-                                            <td>Sell</td>
-                                            <td>Bitcoin</td>
-                                            <td>0.00413 ETH</td>
-                                            <td>$ 2123.01</td>
-                                            <td>
-                                                <span class="badge bg-success font-size-10">Completed</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>07 Mar, 2020</td>
-                                            <td>Buy</td>
-                                            <td>Bitcoin</td>
-                                            <td>1.00952 BTC</td>
-                                            <td>$ 9067.62</td>
-                                            <td>
-                                                <span class="badge bg-warning font-size-10">Pending</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>08 Mar, 2020</td>
-                                            <td>Sell</td>
-                                            <td>Ethereum</td>
-                                            <td>0.00413 ETH</td>
-                                            <td>$ 2123.01</td>
-                                            <td>
-                                                <span class="badge bg-success font-size-10">Completed</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>09 Mar, 2020</td>
-                                            <td>Sell</td>
-                                            <td>Litecoin</td>
-                                            <td>1.00952 LTC</td>
-                                            <td>$ 9067.62</td>
-                                            <td>
-                                                <span class="badge bg-success font-size-10">Completed</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>10 Mar, 2020</td>
-                                            <td>Buy</td>
-                                            <td>Ethereum</td>
-                                            <td>0.00413 ETH</td>
-                                            <td>$ 2123.01</td>
-                                            <td>
-                                                <span class="badge bg-warning font-size-10">Pending</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>11 Mar, 2020</td>
-                                            <td>Buy</td>
-                                            <td>Ethereum</td>
-                                            <td>1.04321 ETH</td>
-                                            <td>$ 9423.73</td>
-                                            <td>
-                                                <span class="badge bg-success font-size-10">Completed</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>12 Mar, 2020</td>
-                                            <td>Sell</td>
-                                            <td>Bitcoin</td>
-                                            <td>0.00413 ETH</td>
-                                            <td>$ 2123.01</td>
-                                            <td>
-                                                <span class="badge bg-success font-size-10">Completed</span>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
