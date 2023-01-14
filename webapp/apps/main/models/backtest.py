@@ -108,9 +108,9 @@ class Backtest(models.Model):
             'backtest_id': str(self.id),
             'backtest_result_id': str(backtest_result.id),
             'backtest_indexes': json.dumps(equity_curve.index.strftime('%Y-%m-%d').tolist()),
-            'backtest_returns': json.dumps(equity_curve['returns'].fillna(0).tolist()),
-            'backtest_drawdowns': json.dumps(equity_curve['drawdown'].fillna(0).tolist()),
-            'backtest_portfolio_values': json.dumps(equity_curve['equity_curve'].fillna(0).tolist()),
+            'backtest_returns': json.dumps(equity_curve['returns'].tolist()),
+            'backtest_drawdowns': json.dumps(equity_curve['drawdown'].tolist()),
+            'backtest_portfolio_values': json.dumps(equity_curve['equity_curve'].fillna(0).round(3).tolist()),
         }
 
         return response_data

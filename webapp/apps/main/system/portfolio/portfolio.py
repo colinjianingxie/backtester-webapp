@@ -273,7 +273,8 @@ class Portfolio(object):
 
 		'''
 		#plot_performance(self.equity_curve)
-		self.equity_curve = self.equity_curve
+		self.equity_curve['returns'] = self.equity_curve['returns'].fillna(0).apply(lambda x: (x)*100.0).round(2)
+		self.equity_curve['drawdown'] = self.equity_curve['drawdown'].fillna(0).apply(lambda x: (x)*100.0).round(2)
 		#print(self.equity_curve.index.strftime('%Y-%m-%d'))
 		#self.equity_curve.to_csv(’equity.csv’)
 		return {

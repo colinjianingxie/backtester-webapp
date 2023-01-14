@@ -108,7 +108,9 @@ Backtest Results
               </div>
           </div>
     </div>
-    <div id="backtest-results-chart" class="apex-charts" dir="ltr"></div>
+    <div id="backtest-returns-chart" class="apex-charts" dir="ltr"></div>
+    <div id="backtest-drawdowns-chart" class="apex-charts" dir="ltr"></div>
+    <div id="backtest-values-chart" class="apex-charts" dir="ltr"></div>
 </div>
 <!-- end row -->
 
@@ -118,10 +120,31 @@ Backtest Results
 {% block extra_javascript %}
 
 <script>
-    backtestResultsChart.render();
-    backtestResultsChart.updateOptions({
+    backtestReturnsChart.render();
+    backtestDrawdownsChart.render();
+    backtestValuesChart.render();
+
+    backtestReturnsChart.updateOptions({
       series: [{
           data: JSON.parse('{{backtest_returns|safe}}')
+      }],
+      xaxis: {
+          type: 'datetime',
+          categories: JSON.parse('{{backtest_indexes|safe}}'),
+      },
+    });
+    backtestDrawdownsChart.updateOptions({
+      series: [{
+          data: JSON.parse('{{backtest_drawdowns|safe}}')
+      }],
+      xaxis: {
+          type: 'datetime',
+          categories: JSON.parse('{{backtest_indexes|safe}}'),
+      },
+    });
+    backtestValuesChart.updateOptions({
+      series: [{
+          data: JSON.parse('{{backtest_portfolio_values|safe}}')
       }],
       xaxis: {
           type: 'datetime',

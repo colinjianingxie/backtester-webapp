@@ -31,13 +31,16 @@ var candleChartOptions = {
       }
 };
 
-var backtestResultsOptions = {
+var backtestReturnsOptions = {
     chart: {
-        height: 350,
-        type: 'area',
-        toolbar: {
-            show: false,
-        }
+      height: 380,
+      type: 'line',
+      zoom: {
+        enabled: false
+      },
+      toolbar: {
+        show: false
+      }
     },
     dataLabels: {
         enabled: false
@@ -65,6 +68,79 @@ var backtestResultsOptions = {
     }
 }
 
+var backtestDrawdownsOptions = {
+    chart: {
+      height: 380,
+      type: 'line',
+      zoom: {
+        enabled: false
+      },
+      toolbar: {
+        show: false
+      }
+    },
+    dataLabels: {
+        enabled: false
+    },
+    stroke: {
+        curve: 'smooth',
+        width: 3,
+    },
+    series: [{data: []}],
+    colors: ['#556ee6'],
+    xaxis: {
+        type: 'datetime',
+        categories: [],
+    },
+    grid: {
+        borderColor: '#f1f1f1',
+    },
+    tooltip: {
+        x: {
+            format: 'dd/MM/yy HH:mm'
+        },
+    },
+    noData: {
+      text: 'Loading...'
+    }
+}
+
+var backtestValuesOptions = {
+    chart: {
+      height: 380,
+      type: 'line',
+      zoom: {
+        enabled: false
+      },
+      toolbar: {
+        show: false
+      }
+    },
+    dataLabels: {
+        enabled: false
+    },
+    stroke: {
+        curve: 'smooth',
+        width: 3,
+    },
+    series: [{data: []}],
+    colors: ['#556ee6'],
+    xaxis: {
+        type: 'datetime',
+        categories: [],
+    },
+    grid: {
+        borderColor: '#f1f1f1',
+    },
+    tooltip: {
+        x: {
+            format: 'dd/MM/yy HH:mm'
+        },
+    },
+    noData: {
+      text: 'Loading...'
+    }
+}
 
 function updateDailyPriceChart(endpoint_base, ticker, chartVariable) {
   // TODO: Try to get endpoint_base to be dynamic instead of hardcoded...
@@ -73,3 +149,8 @@ function updateDailyPriceChart(endpoint_base, ticker, chartVariable) {
   }
   get_chart_json(chartOptions, chartVariable)
 }
+
+var backtestReturnsChart = new ApexCharts(document.querySelector("#backtest-returns-chart"), backtestReturnsOptions);
+var backtestDrawdownsChart = new ApexCharts(document.querySelector("#backtest-drawdowns-chart"), backtestDrawdownsOptions);
+var backtestValuesChart = new ApexCharts(document.querySelector("#backtest-values-chart"), backtestValuesOptions);
+var backtestPriceChart = new ApexCharts(document.querySelector("#backtest-daily-price-chart"), candleChartOptions);
