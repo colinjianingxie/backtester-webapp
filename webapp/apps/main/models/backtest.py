@@ -6,6 +6,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.duration import duration_string
 from jsonfield import JSONField
+from main.models.strategy import Strategy
 from main.system.backtest import Backtest as bt
 from main.system.data_handler import HistoricDataHandler
 from main.system.execution_handler import SimulatedExecutionHandler
@@ -13,7 +14,6 @@ from main.system.portfolio import Portfolio
 from main.system.strategy.default.ml_forecast import MLForecast
 from main.system.strategy.default.moving_average_crossover import MovingAverageCrossover
 from oauth.models.user_model import Account
-from main.models.strategy import Strategy
 # Functions for actual backtesting
 
 class Backtest(models.Model):
@@ -85,7 +85,7 @@ class Backtest(models.Model):
         end_simulation_time=datetime.datetime.now()
         duration = end_simulation_time - start_simulation_time
         stats = results['stats']
-
+        equity_curve = stats['equity_curve']
         backtest_result = BacktestResult(
             backtest=self,
             total_return=stats['total_return'],
@@ -106,6 +106,10 @@ class Backtest(models.Model):
         response_data = {
             'backtest_id': str(self.id),
             'backtest_result_id': str(backtest_result.id),
+            'backtest_indexes': json.dumps(equity_curve.index.strftime('%Y-%m-%d').tolist()),
+            'backtest_returns': json.dumps(equity_curve['returns'].fillna(0).tolist()),
+            'backtest_drawdowns': json.dumps(equity_curve['drawdown'].fillna(0).tolist()),
+            'backtest_portfolio_values': json.dumps(equity_curve['equity_curve'].fillna(0).tolist()),
         }
 
         return response_data

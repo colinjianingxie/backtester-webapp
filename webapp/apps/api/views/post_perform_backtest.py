@@ -26,7 +26,7 @@ class PostPerformBacktestView(APIView):
         strategy_parameters = request.POST['strategy_parameters']
         data_start_date = request.POST['data_start_date']
         data_end_date = request.POST['data_end_date']
-        portfolio_start_date = request.POST['portfolio_start_date']
+        portfolio_start_date = data_start_date #request.POST['portfolio_start_date']
 
         response_data = self.perform_backtest_helper(
             request,
@@ -102,12 +102,12 @@ class PostPerformBacktestView(APIView):
             )
             backtest.save()
 
-        backtest_ids = backtest.perform_backtest()
+        backtest_results = backtest.perform_backtest()
 
         return api_response(
             type='backtest',
             view='post_perform_backtest',
             status=ResponseStatus.SUCCESS.value,
             message=f'successfully performed backtest',
-            data=backtest_ids
+            data=backtest_results
         )

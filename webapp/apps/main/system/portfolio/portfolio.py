@@ -12,7 +12,7 @@ import pandas as pd
 from main.system.event import FillEvent, OrderEvent
 from .performance import create_sharpe_ratio, create_drawdowns
 from .plot_performance import plot_performance
-
+from utils.helper.datetime_helper import tz_to_naive
 
 class Portfolio(object):
 	"""
@@ -241,12 +241,13 @@ class Portfolio(object):
 		Creates a Pandas DataFrame from the all_holdings
 		list of dictionaries.
 		"""
+
 		curve = pd.DataFrame(self.all_holdings)
+		curve['datetime'] = curve['datetime'].apply(lambda t: t.replace(tzinfo=None)) # TODO: Need to figure out, but remove timezone for now
 		curve.set_index('datetime', inplace=True)
 		curve['returns'] = curve['total'].pct_change()
 		curve['equity_curve'] = (1.0+curve['returns']).cumprod()
-		self.equity_curve = curve
-
+		self.equity_curve = curve[1:] # Skip first row.
 
 	def output_summary_stats(self):
 		"""
@@ -267,13 +268,18 @@ class Portfolio(object):
 			(f"Max Drawdown: {max_dd * 100.0:.2f}%"),
 			(f"Drawdown Duration: {dd_duration:.2f}")
 		]
+
+			# Plot three charts: Equity curve,
+
 		'''
 		#plot_performance(self.equity_curve)
-
+		self.equity_curve = self.equity_curve
+		#print(self.equity_curve.index.strftime('%Y-%m-%d'))
 		#self.equity_curve.to_csv(’equity.csv’)
 		return {
 			'total_return': total_return,
 			'sharpe_ratio': sharpe_ratio,
 			'max_drawdown': max_dd,
 			'drawdown_duration': dd_duration,
+			'equity_curve': self.equity_curve,
 		}
