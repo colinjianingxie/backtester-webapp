@@ -48,7 +48,7 @@ class Portfolio(object):
 		self.start_date = custom_parameters['portfolio']['start_date']
 		self.initial_capital = initial_capital
 		self.all_positions = self.construct_all_positions()
-		self.current_positions = dict((k,v) for k, v in [(s, 0) for s in self.symbol_list])
+		self.current_positions = dict((k,v) for k, v in [(s, 0) for s in self.symbol_list]) # {'ZBRA': 0, 'XYZ': 0}
 		self.all_holdings = self.construct_all_holdings()
 		self.current_holdings = self.construct_current_holdings()
 
@@ -56,6 +56,11 @@ class Portfolio(object):
 		"""
 		Constructs the positions list using the start_date
 		to determine when the time index will begin.
+		e.g: [{
+				'ZBRA': 0,
+				'XYZ': 0,
+				'datetime': datetime.datetime(2017, 1, 3, 0, 0, tzinfo=datetime.timezone.utc)
+			 }]
 		"""
 		d = dict((k,v) for k, v in [(s, 0) for s in self.symbol_list])
 		d['datetime'] = self.start_date
@@ -65,6 +70,14 @@ class Portfolio(object):
 		"""
 		Constructs the holdings list using the start_date
 		to determine when the time index will begin.
+		e.g: [{
+				'ZBRA': 0.0,
+				'XYZ': 0.0,
+				'datetime': datetime.datetime(2017, 1, 3, 0, 0, tzinfo=datetime.timezone.utc),
+				'cash': 100000.0,
+				'commission': 0.0,
+				'total': 100000.0
+			}]
 		"""
 		d = dict((k,v) for k, v in [(s, 0.0) for s in self.symbol_list])
 		d['datetime'] = self.start_date
@@ -76,6 +89,13 @@ class Portfolio(object):
 	def construct_current_holdings(self):
 		"""
 		This constructs the dictionary which will hold the instantaneous value of the portfolio across all symbols.
+		e.g: {
+				'ZBRA': 0.0,
+				'XYZ': 0.0,
+				'cash': 100000.0,
+				'commission': 0.0,
+				'total': 100000.0
+			}
 		"""
 		d = dict((k,v) for k, v in [(s, 0.0) for s in self.symbol_list])
 		d['cash'] = self.initial_capital
@@ -86,7 +106,8 @@ class Portfolio(object):
 
 	def update_timeindex(self, event):
 		"""
-		Adds a new record to the positions matrix for the current market data bar. This reflects the PREVIOUS bar, i.e. all
+		Adds a new record to the positions matrix for the current market data bar.
+		This reflects the PREVIOUS bar, i.e. all
 		current market data at this stage is known (OHLCV).
 		Makes use of a MarketEvent from the events queue.
 		"""
@@ -113,7 +134,7 @@ class Portfolio(object):
 		dh['total'] = self.current_holdings['cash']
 		for s in self.symbol_list:
 			# Approximation to the real value
-			market_value = self.current_positions[s] * self.bars.get_latest_bar_value(s, "adj_close_price")
+			market_value = self.current_positions[s] * self.bars.get_latest_bar_value(s, "adj_close_price") # Get the total amount bought from the adj_close_price
 			dh[s] = market_value
 			dh['total'] += market_value
 
@@ -156,12 +177,12 @@ class Portfolio(object):
 			fill_dir = -1
 
 		# Update holdings list with new quantities
-		fill_cost = self.bars.get_latest_bar_value(fill.symbol, "adj_close_price")
-		cost = fill_dir * fill_cost * fill.quantity
-		self.current_holdings[fill.symbol] += cost
-		self.current_holdings['commission'] += fill.commission
-		self.current_holdings['cash'] -= (cost + fill.commission)
-		self.current_holdings['total'] -= (cost + fill.commission)
+		fill_cost = self.bars.get_latest_bar_value(fill.symbol, "adj_close_price") 	# stock_price
+		cost = fill_dir * fill_cost * fill.quantity # +-1 * stock price * quantity filled.
+		self.current_holdings[fill.symbol] += cost # The cost for either purchasing or selling equity.
+		self.current_holdings['commission'] += fill.commission # how much the commision was
+		self.current_holdings['cash'] -= (cost + fill.commission) # Gain money from shorting, lose money from buying
+		self.current_holdings['total'] -= (cost + fill.commission) # Since total equity is based on cash, same as cash
 
 	def update_fill(self, event):
 		"""
@@ -188,7 +209,7 @@ class Portfolio(object):
 		symbol = signal.symbol
 		direction = signal.signal_type
 		strength = signal.strength
-		mkt_quantity = 100
+		mkt_quantity = 100 # TODO: Here to change how much of the order we buy everytime...
 		cur_quantity = self.current_positions[symbol]
 		order_type = 'MKT'
 
@@ -201,7 +222,7 @@ class Portfolio(object):
 		if direction == 'EXIT' and cur_quantity < 0:
 			order = OrderEvent(symbol, order_type, abs(cur_quantity), 'BUY')
 
-		self.event_history.append(order)
+		self.event_history.append((direction, order))
 		return order
 
 
@@ -212,7 +233,7 @@ class Portfolio(object):
 		"""
 		if event.type == 'SIGNAL':
 			order_event = self.generate_naive_order(event)
-			self.events.put(order_event)
+			self.events.put(order_event) # Put all the orders on the event queue...
 
 
 	def create_equity_curve_dataframe(self):

@@ -37,3 +37,6 @@ class OrderEvent(Event):
 		Outputs the values within the Order.
 		"""
 		print(f"Order: Symbol={self.symbol}, Type={self.order_type}, Quantity={self.quantity}, Direction={self.direction}")
+
+	def __str__(self):
+		return f"Order: Symbol={self.symbol}, Type={self.order_type}, Quantity={self.quantity}, Direction={self.direction}"

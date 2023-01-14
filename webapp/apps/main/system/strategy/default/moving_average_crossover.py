@@ -22,7 +22,7 @@ class MovingAverageCrossover(Strategy):
 		self.symbol_list = self.bars.symbol_list
 		self.events = events
 		self.event_history = []
-		self.short_window = int(custom_parameters['model']['short_window'])
+		self.short_window = int(custom_parameters['model']['short_window']) # TODO: Short window always <= long_window!
 		self.long_window = int(custom_parameters['model']['long_window'])
 		# Set to True if a symbol is in the market
 		self.bought = self._calculate_initial_bought()
@@ -30,7 +30,7 @@ class MovingAverageCrossover(Strategy):
 	def _calculate_initial_bought(self):
 		"""
 		Adds keys to the bought dictionary for all symbols
-		and sets them to ’OUT’.
+		and sets them to 'OUT'.
 		"""
 		bought = {}
 		for s in self.symbol_list:
@@ -48,27 +48,26 @@ class MovingAverageCrossover(Strategy):
 		"""
 		if event.type == 'MARKET':
 			for s in self.symbol_list:
-				bars = self.bars.get_latest_bars_values(
-					s, "adj_close_price", N=self.long_window
-				)
-				bar_date = self.bars.get_latest_bar_datetime(s)
+				# Get latest "long_window" number bar values
+				bars = self.bars.get_latest_bars_values(s, "adj_close_price", N=self.long_window)
+				bar_date = self.bars.get_latest_bar_datetime(s) # Get latest datetime
 
 				if bars is not None and bars != []:
-					short_sma = np.mean(bars[-self.short_window:])
-					long_sma = np.mean(bars[-self.long_window:])
+					short_sma = np.mean(bars[-self.short_window:]) # From the latest long_window bars, average the last short_window.
+					long_sma = np.mean(bars[-self.long_window:]) # Average the long_window bars
 					symbol = s
 					cur_date = dt.utcnow()
 					sig_dir = ""
-
+					# WILL alternate between "Long, Out, Long, Out"
 					if short_sma > long_sma and self.bought[s] == "OUT":
 						print(f"LONG: {bar_date}")
 						sig_dir = 'LONG'
-						signal = SignalEvent(1, symbol, cur_date, sig_dir, 1.0)
+						signal = SignalEvent(1, symbol, cur_date, sig_dir, 1.0) # TODO: Strategy:id here... strength is 1.0...
 						self.events.put(signal)
-						self.bought[s] = 'LONG'
+						self.bought[s] = 'LONG' # We've longed the equity...
 					elif short_sma < long_sma and self.bought[s] == "LONG":
 						print(f"SHORT: {bar_date}")
 						sig_dir = 'EXIT'
 						signal = SignalEvent(1, symbol, cur_date, sig_dir, 1.0)
 						self.events.put(signal)
-						self.bought[s] = 'OUT'
+						self.bought[s] = 'OUT' # Change it back to "Out"...

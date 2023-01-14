@@ -28,7 +28,6 @@ class Backtest(object):
 		"""
 		Initialises the backtest.
 		Parameters:
-		csv_dir (optional) - The hard root to the CSV data directory.
 		symbol_list - The list of symbol strings.
 		intial_capital - The starting capital for the portfolio.
 		heartbeat - Backtest "heartbeat" in seconds
@@ -47,12 +46,10 @@ class Backtest(object):
 		self.portfolio_cls = portfolio
 		self.strategy_cls = strategy
 		self.custom_parameters = custom_parameters
-
 		self.events = queue.Queue()
 		self.signals = 0
 		self.orders = 0
 		self.fills = 0
-		self.num_strats = 1
 
 		self._generate_trading_instances()
 
@@ -72,24 +69,26 @@ class Backtest(object):
 		"""
 		Executes the backtest.
 		"""
-		i=0
+		i=0 # Counter for each tick..
 		while True:
 			i += 1
-			#print(i)
 
 			# Update the market bars
 			if self.data_handler.continue_backtest == True:
-				self.data_handler.update_bars()
+				self.data_handler.update_bars() # Continue to the next bar of data and put it on self.events
 			else:
-				break
+				break # Break out of whole backtest if we don't continue_backtest...
 
 			# Handle the events
 			while True:
 				try:
-					event = self.events.get(False)
+					event = self.events.get(False) # Returns event if it is immediately available, else break.
 				except queue.Empty:
 					break
 				else:
+					#
+					# TODO: Each event is processed here... Note that b/c each signal will generate order/fill...they should be equal.
+					#
 					if event is not None:
 						if event.type == 'MARKET':
 							self.strategy.calculate_signals(event)
@@ -103,7 +102,7 @@ class Backtest(object):
 						elif event.type == 'FILL':
 							self.fills += 1
 							self.portfolio.update_fill(event)
-				time.sleep(self.heartbeat)
+				time.sleep(self.heartbeat) # Heartbeat is time it takes for each event to process...
 
 
 	def _output_performance(self):

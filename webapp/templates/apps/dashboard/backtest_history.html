@@ -154,10 +154,4 @@ Backtest
 {% endblock %}
 {% block extra_javascript %}
 
-<script>
-    var backtestPriceChart = new ApexCharts(document.querySelector("#backtest-daily-price-chart"), candleChartOptions);
-    backtestPriceChart.render();
-</script>
-<script src="{% static 'js/services/init_backtest.js' %}"></script>
-<script src="{% static 'js/api/backtest.js' %}"></script>
 {% endblock %}

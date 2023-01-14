@@ -1,9 +1,11 @@
-from .data_handler import DataHandler
-from main.pricing.helpers.get_daily_prices import get_daily_prices
-from main.system.event import MarketEvent
+import datetime
+
 import numpy as np
 import pandas as pd
-import datetime
+from main.pricing.helpers.get_daily_prices import get_daily_prices
+from main.system.event import MarketEvent
+
+from .data_handler import DataHandler
 
 class HistoricDataHandler(DataHandler):
 	"""
@@ -59,6 +61,9 @@ class HistoricDataHandler(DataHandler):
 	def _get_new_bar(self, symbol):
 		"""
 		Returns the latest bar from the data feed.
+		Specifically returns a generator object:
+		to get b[0], need to call: gen.next().
+		to get b[1], call gen.next() again..
 		"""
 		for b in self.symbol_data[symbol]:
 			yield b
@@ -87,7 +92,7 @@ class HistoricDataHandler(DataHandler):
 			print("That symbol is not available in the historical data set.")
 			raise
 		else:
-			return bars_list[-N:]
+			return bars_list[-N:] # Returns last N values...
 
 	def get_latest_bar_datetime(self, symbol):
 		"""
@@ -99,7 +104,7 @@ class HistoricDataHandler(DataHandler):
 			print("That symbol is not available in the historical data set.")
 			raise
 		else:
-			return bars_list[-1][0]
+			return bars_list[-1][0] # Returns datetime for lastest value since it's index at 0
 
 	def get_latest_bar_value(self, symbol, val_type):
 		"""
@@ -112,7 +117,7 @@ class HistoricDataHandler(DataHandler):
 			print("That symbol is not available in the historical data set.")
 			raise
 		else:
-			return getattr(bars_list[-1][1], val_type)
+			return getattr(bars_list[-1][1], val_type) # Utilizes getattr to get dict key
 
 	def get_latest_bars_values(self, symbol, val_type, N=1):
 		"""
@@ -125,7 +130,7 @@ class HistoricDataHandler(DataHandler):
 			print("That symbol is not available in the historical data set.")
 			raise
 		else:
-			return np.array([getattr(b[1], val_type) for b in bars_list])
+			return np.array([getattr(b[1], val_type) for b in bars_list]) # Returns np array of all the values of the latest values
 
 
 	def update_bars(self):
@@ -134,10 +139,10 @@ class HistoricDataHandler(DataHandler):
 		"""
 		for s in self.symbol_list:
 			try:
-				bar = next(self._get_new_bar(s))
+				bar = next(self._get_new_bar(s)) # Iterate through the generator function... get the next bar of data.
 			except StopIteration:
-				self.continue_backtest = False
+				self.continue_backtest = False # stop the backtest when we reach the end of the iterator.
 			else:
 				if bar is not None:
-					self.latest_symbol_data[s].append(bar)
-			self.events.put(MarketEvent())
+					self.latest_symbol_data[s].append(bar) # Add the bar to the latest symbol data.
+			self.events.put(MarketEvent()) # Put an empty market event onto the queue.

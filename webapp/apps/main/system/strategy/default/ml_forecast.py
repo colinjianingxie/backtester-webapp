@@ -68,8 +68,8 @@ class MLForecast(Strategy):
 
 		if event.type == 'MARKET':
 			self.bar_index += 1
-			if self.bar_index > 5:
-				lags = self.bars.get_latest_bars_values(self.symbol_list[0], "returns", N=3)
+			if self.bar_index > 5: # After 5 bars of market data...
+				lags = self.bars.get_latest_bars_values(self.symbol_list[0], "returns", N=3) # Get the latest 3 values...
 				pred_series = pd.Series(
 				{
 					'Lag1': lags[1]*100.0,
@@ -78,6 +78,7 @@ class MLForecast(Strategy):
 
 				pred_reshape = pred_series.values.reshape(1, -1)
 				pred = self.model.predict(pred_reshape)
+				# Based on the prediction from the model, either long the data or exit the data..
 				if pred > 0 and not self.long_market:
 					self.long_market = True
 					signal = SignalEvent(1, sym, cur_date, 'LONG', 1.0)
