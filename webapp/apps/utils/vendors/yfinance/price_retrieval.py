@@ -9,7 +9,7 @@ from utils.vendors.db_functions import obtain_list_of_db_tickers
 def start_yahoo_finance():
 	#TICKER_COUNT = 500 # Change this to 500 to download all tickers
 	WAIT_TIME_IN_SECONDS = 15.0 # Adjust how frequently the API is called
-	TARGETS = []
+	TARGETS = ["BP", "XOM", "AMD", "INTC"]
 	START_INDEX = 500
 	vendor = create_or_update_vendor('Yahoo Finance')
 

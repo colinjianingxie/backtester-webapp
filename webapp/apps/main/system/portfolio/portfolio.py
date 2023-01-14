@@ -12,7 +12,6 @@ import pandas as pd
 from main.system.event import FillEvent, OrderEvent
 from .performance import create_sharpe_ratio, create_drawdowns
 from .plot_performance import plot_performance
-from utils.helper.datetime_helper import tz_to_naive
 
 class Portfolio(object):
 	"""

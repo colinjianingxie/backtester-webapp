@@ -6,12 +6,7 @@ window.onload = function() {
 function go_to_result(response_data) {
 
   window.location.href = `../../${urls.backtest_result}/${response_data.backtest_id}/${response_data.backtest_result_id}`;
-  console.log(JSON.parse(response_data.backtest_returns));
-  console.log(JSON.parse(response_data.backtest_indexes));
-  console.log(JSON.parse(response_data.backtest_drawdowns));
-  console.log(JSON.parse(response_data.backtest_portfolio_values));
-
-
+  
 }
 
 function closeBacktestStockPickerModal() {

@@ -34,9 +34,9 @@ DEFAULT_STRATEGIES = {
 			'model_start_test_date': 'date',
 		},
 		'defaults': {
-			'model_start_date': '2016-01-10',
+			'model_start_date': '2017-01-10',
 			'model_end_date': '2017-12-31',
-			'model_start_test_date': '2017-01-01'
+			'model_start_test_date': '2017-10-01'
 		},
 		'min': {},
 		'max': {},

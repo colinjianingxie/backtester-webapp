@@ -1,20 +1,19 @@
-def tz_to_naive(datetime_index):
-    """Converts a tz-aware DatetimeIndex into a tz-naive DatetimeIndex,
-    effectively baking the timezone into the internal representation.
+import pandas as pd
 
-    Parameters
-    ----------
-    datetime_index : pandas.DatetimeIndex, tz-aware
+def trading_day_range(bday_start=None,bday_end=None,bday_freq='B', open_time='09:30',close_time='16:00',iday_freq='15T',weekmask=None):
 
-    Returns
-    -------
-    pandas.DatetimeIndex, tz-naive
-    """
-    # Calculate timezone offset relative to UTC
-    timestamp = datetime_index[0]
-    tz_offset = (timestamp.replace(tzinfo=None) -
-                 timestamp.tz_convert('UTC').replace(tzinfo=None))
-    tz_offset_td64 = np.timedelta64(tz_offset)
+	if bday_start is None: bday_start = pd.Timestamp.today()
+	if bday_end is None: bday_end = bday_start + pd.Timedelta(days=1)
 
-    # Now convert to naive DatetimeIndex
-    return pd.DatetimeIndex(datetime_index.values + tz_offset_td64)
+	daily = []
+
+	for d in pd.bdate_range(start=bday_start,end=bday_end,freq=bday_freq,weekmask=weekmask):
+		topen = pd.Timestamp(open_time)
+		d1 = d.replace(hour=topen.hour,minute=topen.minute)
+		tclose = pd.Timestamp(close_time)
+		d2 = d.replace(hour=tclose.hour,minute=tclose.minute+1)
+		daily.append(pd.date_range(d1,d2,freq=iday_freq))
+
+	index = daily[0].union_many(daily[1:])
+
+	return index

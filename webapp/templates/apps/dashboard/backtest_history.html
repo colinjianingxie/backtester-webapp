@@ -96,6 +96,7 @@ Backtest
                                         <th scope="col">Max Drawdown</th>
                                         <th scope="col">Drawdown Duration</th>
                                         <th scope="col">Backtest duration</th>
+                                        <th scope="col"></th>
                                     </tr>
 
                                 </thead>
@@ -113,6 +114,7 @@ Backtest
                                         <td>
                                             <span class="badge bg-success font-size-10">{{backtest_result.display_duration}} ms</span>
                                         </td>
+                                        <td><a href="{% url 'backtest_result' backtest_id=backtest_result.backtest.id backtest_result_id=backtest_result.id %}">View</a></td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

@@ -21,7 +21,7 @@ def get_daily_price_df(ticker, start_date=None, end_date=None):
     if start_date:
         start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
     else:
-        start_date = datetime.datetime.strptime("2015-01-01", "%Y-%m-%d")
+        start_date = datetime.datetime.strptime("2021-01-01", "%Y-%m-%d")
     if end_date:
         end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
     else:
