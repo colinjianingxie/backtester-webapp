@@ -78,7 +78,7 @@ class Backtest(models.Model):
         )
         return backtest
 
-    def perform_backtest(self):
+    def perform_backtest(self, save_result=True):
         backtest = self.create_backtest()
         start_simulation_time=datetime.datetime.now()
         results = backtest.simulate_trading()
@@ -101,7 +101,8 @@ class Backtest(models.Model):
             duration=duration
             )
 
-        backtest_result.save()
+        if save_result:
+            backtest_result.save()
 
         response_data = {
             'backtest_id': str(self.id),

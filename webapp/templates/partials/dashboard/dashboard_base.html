@@ -115,7 +115,7 @@
     <!-- Ion Range Slider-->
     <script src="{% static 'libs/ion-rangeslider/js/ion.rangeSlider.min.js' %}"></script>
     <!--<script src="{% static 'js/dashboard/candle_stick.js' %}"></script>-->
-
+    <script src="{% static 'js/services/init_charts.js' %}"></script>
     <script type="text/javascript">
         $.ajaxSetup({headers:{'X-CSRFToken': "{{ csrf_token }}"}})
         const urls = {
@@ -128,9 +128,11 @@
           "get_daily_price_coordinates_json": "api/get_daily_price_coordinates_json",
           "post_backtest_strategy_parameter": "{% url 'post_backtest_strategy_parameter' %}",
         }
+        var backtestResultsChart = new ApexCharts(document.querySelector("#backtest-results-chart"), backtestResultsOptions);
+        var backtestPriceChart = new ApexCharts(document.querySelector("#backtest-daily-price-chart"), candleChartOptions);
     </script>
     <script src="{% static 'js/api/api.js' %}"></script>
-    <script src="{% static 'js/services/init_charts.js' %}"></script>
+
     {% block extra_javascript %}{% endblock %}
     <script src="{% static 'js/app.js' %}"></script>
     {% endblock javascript %}

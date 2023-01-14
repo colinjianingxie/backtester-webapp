@@ -79,11 +79,6 @@ Backtest Results
                                     <p class="text-muted mb-2">Sharpe Ratio</p>
                                     <h5>{{br.sharpe_ratio}}</h5>
 
-                                    <!--
-                                    <div class="mt-3">
-                                        <a href="javascript: void(0);" class="btn btn-primary btn-sm w-md">Withdraw</a>
-                                    </div>
-                                    -->
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -95,11 +90,6 @@ Backtest Results
                                     <p class="text-muted mb-2">Max Drawdown</p>
                                     <h5>{{br.max_drawdown}} %</h5>
 
-                                    <!--
-                                    <div class="mt-3">
-                                        <a href="javascript: void(0);" class="btn btn-primary btn-sm w-md">Withdraw</a>
-                                    </div>
-                                    -->
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -110,11 +100,7 @@ Backtest Results
 
                                     <p class="text-muted mb-2">Draw Duration</p>
                                     <h5>{{br.drawdown_duration}}</h5>
-                                    <!--
-                                    <div class="mt-3">
-                                        <a href="javascript: void(0);" class="btn btn-primary btn-sm w-md">Withdraw</a>
-                                    </div>
-                                    -->
+
                                 </div>
                             </div>
                         </div>
@@ -124,9 +110,18 @@ Backtest Results
             </div>
         {% endfor %}
     </div>
-
+    <div id="backtest-results-chart" class="apex-charts" dir="ltr"></div>
 </div>
 <!-- end row -->
 
 <!-- end row -->
+{% endblock %}
+
+{% block extra_javascript %}
+
+<script>
+    backtestResultsChart.render();
+</script>
+
+<script src="{% static 'js/api/backtest.js' %}"></script>
 {% endblock %}

@@ -31,12 +31,40 @@ var candleChartOptions = {
       }
 };
 
-function createCoordinate(data) {
-  return {
-    x: new Date(data.date),
-    y: [data.open, data.high, data.low, data.close]
-  }
+var backtestResultsOptions = {
+    chart: {
+        height: 350,
+        type: 'area',
+        toolbar: {
+            show: false,
+        }
+    },
+    dataLabels: {
+        enabled: false
+    },
+    stroke: {
+        curve: 'smooth',
+        width: 3,
+    },
+    series: [{
+        name: 'backtest-returns',
+        data: []
+    }],
+    colors: ['#556ee6'],
+    xaxis: {
+        type: 'datetime',
+        categories: [],
+    },
+    grid: {
+        borderColor: '#f1f1f1',
+    },
+    tooltip: {
+        x: {
+            format: 'dd/MM/yy HH:mm'
+        },
+    }
 }
+
 
 function updateDailyPriceChart(endpoint_base, ticker, chartVariable) {
   // TODO: Try to get endpoint_base to be dynamic instead of hardcoded...

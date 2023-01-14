@@ -5,11 +5,22 @@ window.onload = function() {
 
 function go_to_result(response_data) {
 
-  //window.location.href = `../../${urls.backtest_result}/${response_data.backtest_id}/${response_data.backtest_result_id}`;
+  window.location.href = `../../${urls.backtest_result}/${response_data.backtest_id}/${response_data.backtest_result_id}`;
   console.log(JSON.parse(response_data.backtest_returns));
   console.log(JSON.parse(response_data.backtest_indexes));
   console.log(JSON.parse(response_data.backtest_drawdowns));
   console.log(JSON.parse(response_data.backtest_portfolio_values));
+
+  backtestResultsChart.updateOptions({
+    series: [{
+        name: 'backtest-returns',
+        data: JSON.parse(response_data.backtest_returns)
+    }],
+    xaxis: {
+        type: 'datetime',
+        categories: JSON.parse(response_data.backtest_indexes),
+    },
+  });
 }
 
 function closeBacktestStockPickerModal() {
@@ -31,12 +42,3 @@ $("#initial-portfolio-value").ionRangeSlider({
     $('#initial-backtest-value').data('initial-capital', data.from)
   }
 })
-
-
-
-function updateStrategyParameterSelections(strategy_parameters){
-  console.log("{{backtest_default_strategy.strategy_parameters}}")
-  for (const [parameterName, parameterType] of Object.entries(strategy_parameters)) {
-    console.log(`${parameterName}: ${parameterType}`);
-  }
-}
