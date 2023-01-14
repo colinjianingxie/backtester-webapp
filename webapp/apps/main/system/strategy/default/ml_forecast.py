@@ -40,8 +40,6 @@ class MLForecast(Strategy):
 			lags=5,
 			vendor_name=self.vendor_name
 		)
-		#snpret = create_lagged_series(ticker_name, start_date, end_date, lags=5, column_name='adj_close_price', additional_columns=['volume'], vendor_name='AlphaVantage')
-		print(snpret)
 
 		# Use the prior two days of returns as predictor
 		# values, with direction as the response
