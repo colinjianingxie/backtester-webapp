@@ -11,16 +11,7 @@ function go_to_result(response_data) {
   console.log(JSON.parse(response_data.backtest_drawdowns));
   console.log(JSON.parse(response_data.backtest_portfolio_values));
 
-  backtestResultsChart.updateOptions({
-    series: [{
-        name: 'backtest-returns',
-        data: JSON.parse(response_data.backtest_returns)
-    }],
-    xaxis: {
-        type: 'datetime',
-        categories: JSON.parse(response_data.backtest_indexes),
-    },
-  });
+
 }
 
 function closeBacktestStockPickerModal() {

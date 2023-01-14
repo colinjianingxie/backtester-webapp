@@ -38,9 +38,14 @@ class BacktestResultsView(LoginRequiredMixin, GroupRequiredMixin,TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        results = self.get_backtest_result(context)
+        result = self.get_backtest_result(context)
+        backtest_results = result.backtest.perform_backtest(save_result=False)
 
-        context['backtest_results'] = results
+        context['backtest_result'] = result
+        context['backtest_indexes'] = backtest_results['backtest_indexes']
+        context['backtest_returns'] = backtest_results['backtest_returns']
+        context['backtest_drawdowns'] = backtest_results['backtest_drawdowns']
+        context['backtest_portfolio_values'] = backtest_results['backtest_portfolio_values']
 
         return context
 
@@ -49,6 +54,6 @@ class BacktestResultsView(LoginRequiredMixin, GroupRequiredMixin,TemplateView):
         backtest_result_id = context.get('backtest_result_id', None)
         if backtest_id and backtest_result_id:
             # TODO: Check if backtest result actually exists
-            return BacktestResult.objects.all().filter(id=backtest_result_id,backtest__id=backtest_id)
-        elif backtest_id and not backtest_result_id:
-            return BacktestResult.objects.all().filter(backtest__id=backtest_id)
+            return BacktestResult.objects.all().filter(id=backtest_result_id,backtest__id=backtest_id).first()
+        else:
+            return None

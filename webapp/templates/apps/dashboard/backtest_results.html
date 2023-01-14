@@ -15,100 +15,98 @@ Backtest Results
 
 <div class="row">
     <div class="col-xl-4">
-        {% for br in backtest_results %}
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="flex-shrink-0 me-4">
-                            <i class="mdi mdi-account-circle text-primary h1"></i>
-                        </div>
+          <div class="card">
+              <div class="card-body">
+                  <div class="d-flex">
+                      <div class="flex-shrink-0 me-4">
+                          <i class="mdi mdi-account-circle text-primary h1"></i>
+                      </div>
 
-                        <div class="flex-grow-1">
-                            <div class="text-muted">
-                                <h5>{{br.backtest.name}}</h5>
-                                <p class="mb-1">Id: {{br.backtest.id}}</p>
-                                <p class="mb-0">Backtest Duration: {{br.display_duration}} ms</p>
-                                <p class="mb-0">backtest: {{br.backtest}}</p>
-                                <p class="mb-0">strategy: {{br.backtest.strategy}}</p>
-                                <p class="mb-0">symbols: {{br.backtest.symbol_list}}</p>
+                      <div class="flex-grow-1">
+                          <div class="text-muted">
+                              <h5>{{backtest_result.backtest.name}}</h5>
+                              <p class="mb-1">Id: {{backtest_result.backtest.id}}</p>
+                              <p class="mb-0">Backtest Duration: {{backtest_result.display_duration}} ms</p>
+                              <p class="mb-0">backtest: {{backtest_result.backtest}}</p>
+                              <p class="mb-0">strategy: {{backtest_result.backtest.strategy}}</p>
+                              <p class="mb-0">symbols: {{backtest_result.backtest.symbol_list}}</p>
 
-                            </div>
+                          </div>
 
-                        </div>
+                      </div>
 
-                        <div class="dropdown ms-2">
-                            <a class="text-muted" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="mdi mdi-dots-horizontal font-size-18"></i>
-                            </a>
+                      <div class="dropdown ms-2">
+                          <a class="text-muted" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="mdi mdi-dots-horizontal font-size-18"></i>
+                          </a>
 
-                            <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body border-top">
+                          <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="#">Details</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-body border-top">
 
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div>
-                                <p class="text-muted mb-2">Portfolio End Balance</p>
-                                <h5>$ {{br.display_portfolio_return}}</h5>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="text-sm-end mt-4 mt-sm-0">
-                                <p class="text-muted mb-2">Portfolio Profit</p>
-                                <h5>+ $ {{br.display_portfolio_profit}}   <span class="badge bg-success ms-1 align-bottom">+ {{br.total_return}} %</span></h5>
+                  <div class="row">
+                      <div class="col-sm-6">
+                          <div>
+                              <p class="text-muted mb-2">Portfolio End Balance</p>
+                              <h5>$ {{backtest_result.display_portfolio_return}}</h5>
+                          </div>
+                      </div>
+                      <div class="col-sm-6">
+                          <div class="text-sm-end mt-4 mt-sm-0">
+                              <p class="text-muted mb-2">Portfolio Profit</p>
+                              <h5>+ $ {{backtest_result.display_portfolio_profit}}   <span class="badge bg-success ms-1 align-bottom">+ {{backtest_result.total_return}} %</span></h5>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
 
-                <div class="card-body border-top">
-                    <p class="text-muted mb-4">Results</p>
-                    <div class="text-center">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div>
-                                    <div class="font-size-24 text-primary mb-2">
-                                        <i class="bx bx-send"></i>
-                                    </div>
+              <div class="card-body border-top">
+                  <p class="text-muted mb-4">Results</p>
+                  <div class="text-center">
+                      <div class="row">
+                          <div class="col-sm-4">
+                              <div>
+                                  <div class="font-size-24 text-primary mb-2">
+                                      <i class="bx bx-send"></i>
+                                  </div>
 
-                                    <p class="text-muted mb-2">Sharpe Ratio</p>
-                                    <h5>{{br.sharpe_ratio}}</h5>
+                                  <p class="text-muted mb-2">Sharpe Ratio</p>
+                                  <h5>{{backtest_result.sharpe_ratio}}</h5>
 
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="mt-4 mt-sm-0">
-                                    <div class="font-size-24 text-primary mb-2">
-                                        <i class="bx bx-import"></i>
-                                    </div>
+                              </div>
+                          </div>
+                          <div class="col-sm-4">
+                              <div class="mt-4 mt-sm-0">
+                                  <div class="font-size-24 text-primary mb-2">
+                                      <i class="bx bx-import"></i>
+                                  </div>
 
-                                    <p class="text-muted mb-2">Max Drawdown</p>
-                                    <h5>{{br.max_drawdown}} %</h5>
+                                  <p class="text-muted mb-2">Max Drawdown</p>
+                                  <h5>{{backtest_result.max_drawdown}} %</h5>
 
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="mt-4 mt-sm-0">
-                                    <div class="font-size-24 text-primary mb-2">
-                                        <i class="bx bx-wallet"></i>
-                                    </div>
+                              </div>
+                          </div>
+                          <div class="col-sm-4">
+                              <div class="mt-4 mt-sm-0">
+                                  <div class="font-size-24 text-primary mb-2">
+                                      <i class="bx bx-wallet"></i>
+                                  </div>
 
-                                    <p class="text-muted mb-2">Draw Duration</p>
-                                    <h5>{{br.drawdown_duration}}</h5>
+                                  <p class="text-muted mb-2">Draw Duration</p>
+                                  <h5>{{drawdown_duration}}</h5>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
 
-                </div>
-            </div>
-        {% endfor %}
+              </div>
+          </div>
     </div>
     <div id="backtest-results-chart" class="apex-charts" dir="ltr"></div>
 </div>
@@ -121,6 +119,15 @@ Backtest Results
 
 <script>
     backtestResultsChart.render();
+    backtestResultsChart.updateOptions({
+      series: [{
+          data: JSON.parse('{{backtest_returns|safe}}')
+      }],
+      xaxis: {
+          type: 'datetime',
+          categories: JSON.parse('{{backtest_indexes|safe}}'),
+      },
+    });
 </script>
 
 <script src="{% static 'js/api/backtest.js' %}"></script>

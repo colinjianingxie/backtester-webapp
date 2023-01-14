@@ -46,10 +46,7 @@ var backtestResultsOptions = {
         curve: 'smooth',
         width: 3,
     },
-    series: [{
-        name: 'backtest-returns',
-        data: []
-    }],
+    series: [{data: []}],
     colors: ['#556ee6'],
     xaxis: {
         type: 'datetime',
@@ -62,6 +59,9 @@ var backtestResultsOptions = {
         x: {
             format: 'dd/MM/yy HH:mm'
         },
+    },
+    noData: {
+      text: 'Loading...'
     }
 }
 
