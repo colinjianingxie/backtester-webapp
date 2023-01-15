@@ -14,7 +14,7 @@ class IntradayOLSMRStrategy(Strategy):
 	(for the high threshold) or an exit signal pair are generated (for the
 	low threshold).
 	"""
-	def __init__(self, bars, events, ols_window=100, zscore_low=0.5, zscore_high=3.0):
+	def __init__(self, bars, events, custom_parameters):
 		"""
 		Initialises the stat arb strategy.
 		Parameters:
@@ -24,9 +24,9 @@ class IntradayOLSMRStrategy(Strategy):
 		self.bars = bars
 		self.symbol_list = self.bars.symbol_list
 		self.events = events
-		self.ols_window = ols_window
-		self.zscore_low = zscore_low
-		self.zscore_high = zscore_high
+		self.ols_window = 100
+		self.zscore_low = 0.5
+		self.zscore_high = 3.0
 
 		self.pair = ('INTC', 'AMD')
 		self.datetime = dt.utcnow()
@@ -90,6 +90,7 @@ class IntradayOLSMRStrategy(Strategy):
 		# component of the pair of tickers
 		y = self.bars.get_latest_bars_values(self.pair[0], "close", N=self.ols_window)
 		x = self.bars.get_latest_bars_values(self.pair[1], "close", N=self.ols_window)
+
 		if y is not None and x is not None:
 			# Check that all window periods are available
 			if len(y) >= self.ols_window and len(x) >= self.ols_window:

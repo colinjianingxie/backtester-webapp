@@ -88,8 +88,10 @@ class HistoricHFTDataHandler(DataHandler):
 		Returns the last N bars from the latest_symbol list,
 		or N-k if less available.
 		"""
+
 		try:
 			bars_list = self.latest_symbol_data[symbol]
+
 		except KeyError:
 			print("That symbol is not available in the historical data set.")
 			raise

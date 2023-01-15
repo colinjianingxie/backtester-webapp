@@ -72,7 +72,7 @@ class Backtest(object):
 		i=0 # Counter for each tick..
 		while True:
 			i += 1
-
+			print(i)
 			# Update the market bars
 			if self.data_handler.continue_backtest == True:
 				self.data_handler.update_bars() # Continue to the next bar of data and put it on self.events
