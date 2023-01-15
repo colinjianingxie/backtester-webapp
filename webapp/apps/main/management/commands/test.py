@@ -43,22 +43,35 @@ class Command(BaseCommand):
 		equity = "AMD"
 
 		df = get_daily_price_df(equity)
+		df_std = df['adj_close_price'].std()
+
 		min_date = df.index[0]
 		max_date = df.index[-1]
 		print(df)
+		print(df['open_price'].std())
+		print(df['adj_close_price'].max())
+		new_df = None
 
-		cum_idx = None
 		for i in range(len(df[-10:])):
-
-			#df.loc[i, 'C'] = df.loc[i-1, 'C'] * df.loc[i, 'A'] + df.loc[i, 'B']
+			a = pd.DataFrame()
 			temp = trading_day_range(df.index[i], df.index[i], bday_freq='B', iday_freq='1T')
 			number_points = len(temp)
-			print(df.iloc[i]['open_price'], df.iloc[i]['adj_close_price'])
-			print(number_points)
-			randomData = bounded_random_walk(number_points, lower_bound=50, upper_bound=100, start=df.iloc[i]['open_price'], end=df.iloc[i]['adj_close_price'], std=10)
-			print(randomData)
+			a['date']= temp
+
+			lower = df['adj_close_price'][:i+1].min() - df_std
+			upper = df['adj_close_price'][:i+1].max() + df_std
+			randomData = bounded_random_walk(number_points, lower_bound=lower, upper_bound=upper, start=df.iloc[i]['open_price'], end=df.iloc[i]['adj_close_price'], std=10)
+			a['price'] = pd.DataFrame(randomData)
+
+			#print(a)
+			if new_df is None:
+				new_df = a
+			else:
+				new_df = new_df.append(a)
+			#print(randomData)
 			#print(df.iloc[i-1].index.values)
 		#a = trading_day_range(min_date,max_date, bday_freq='B', iday_freq='1T')
 		#print(len(a))
 		#randomData = bounded_random_walk(390, lower_bound=50, upper_bound=100, start=50, end=100, std=10)
 		#print(randomData)
+		print(new_df)
