@@ -2,12 +2,12 @@ import datetime
 
 import numpy as np
 import pandas as pd
-from securities_master.helpers.daily_prices import get_daily_price_df
+from securities_master.helpers.daily_prices import get_minute_price_df
 from main.system.event import MarketEvent
 
 from .data_handler import DataHandler
 
-class HistoricDataHandler(DataHandler):
+class HistoricHFTDataHandler(DataHandler):
 	"""
 	HistoricDataHandler is designed to read	each requested symbol from disk and provide an interface
 	to obtain the "latest" bar in a manner identical to a live trading interface.
@@ -39,7 +39,8 @@ class HistoricDataHandler(DataHandler):
 		comb_index = None
 
 		for s in self.symbol_list:
-			self.symbol_data[s] = get_daily_price_df(s, self.start_date, self.end_date)
+			self.symbol_data[s] = get_minute_price_df(s, self.start_date, self.end_date)
+
 
 		for s in self.symbol_list:
 			# Combine the index to pad forward values
@@ -55,7 +56,7 @@ class HistoricDataHandler(DataHandler):
 
 		for s in self.symbol_list:
 			self.symbol_data[s] = self.symbol_data[s].reindex(index=comb_index, method='pad') # Set all of the indices to be the combined index
-			self.symbol_data[s]["returns"] = self.symbol_data[s]["adj_close_price"].pct_change().dropna() # Percentage change between current value and prior value
+			self.symbol_data[s]["returns"] = self.symbol_data[s]["close"].pct_change().dropna() # Percentage change between current value and prior value
 			self.symbol_data[s] = self.symbol_data[s].iterrows() # Make each row iterable in the dataframe
 
 

@@ -1,2 +1,3 @@
 from .data_handler import DataHandler
 from .historic_data_handler import HistoricDataHandler
+from .historic_hft_data_handler import HistoricHFTDataHandler

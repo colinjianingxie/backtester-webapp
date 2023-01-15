@@ -20,13 +20,14 @@ def convert_columns_to_date(df, column_names):
     return df
 
 def get_daily_price_df(ticker, start_date=None, end_date=None):
-    if start_date:
+    if isinstance(start_date, str) and start_date:
         start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
-    else:
-        start_date = datetime.datetime.strptime("2021-01-01", "%Y-%m-%d")
-    if end_date:
+    if isinstance(end_date, str) and end_date:
         end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
-    else:
+
+    if not start_date:
+        start_date = datetime.datetime.strptime("2021-01-01", "%Y-%m-%d")
+    if not end_date:
         end_date = datetime.datetime.now()
 
     values = ["price_date", "open_price", "high_price", "low_price", "close_price", "adj_close_price", "volume"]
@@ -59,11 +60,12 @@ def get_minute_price_df(ticker, start_date=None, end_date=None):
         start_price = df.iloc[i]['open_price']
         end_price = df.iloc[i]['adj_close_price']
         randomData = bounded_random_walk(number_points, lower_bound=lower, upper_bound=upper, start=start_price, end=end_price, std=df_std)
-        temp_df['current_price'] = pd.DataFrame(randomData)
+        temp_df['close'] = pd.DataFrame(randomData)
         temp_df.set_index('datetime', inplace=True)
         if minute_df is None:
             minute_df = temp_df
         else:
             minute_df = minute_df.append(temp_df)
+        minute_df.sort_index(inplace=True)
 
     return minute_df

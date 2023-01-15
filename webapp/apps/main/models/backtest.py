@@ -9,10 +9,13 @@ from jsonfield import JSONField
 from main.models.strategy import Strategy
 from main.system.backtest import Backtest as bt
 from main.system.data_handler import HistoricDataHandler
+from main.system.data_handler import HistoricHFTDataHandler
 from main.system.execution_handler import SimulatedExecutionHandler
 from main.system.portfolio import Portfolio
+from main.system.portfolio import PortfolioHFT
 from main.system.strategy.default.ml_forecast import MLForecast
 from main.system.strategy.default.moving_average_crossover import MovingAverageCrossover
+from main.system.strategy.default.intraday_mr import IntradayOLSMRStrategy
 from oauth.models.user_model import Account
 # Functions for actual backtesting
 
@@ -54,6 +57,8 @@ class Backtest(models.Model):
     def get_data_handler(self):
         if self.data_handler == "HistoricDataHandler":
             return HistoricDataHandler
+        elif self.data_handler == "HistoricHFTDataHandler":
+            return HistoricHFTDataHandler
 
     def get_execution_handler(self):
         if self.execution_handler == "SimulatedExecutionHandler":
@@ -64,6 +69,14 @@ class Backtest(models.Model):
             return MLForecast
         elif self.strategy.name == 'MovingAverageCrossover':
             return MovingAverageCrossover
+        elif self.strategy.name == 'IntradayOLSMRStrategy':
+            return IntradayOLSMRStrategy
+
+    def get_portfolio(self):
+        if self.portfolio == "Portfolio":
+            return Portfolio
+        elif self.portfolio == "PortfolioHFT":
+            return PortfolioHFT
 
     def create_backtest(self):
         backtest = bt(
@@ -72,7 +85,7 @@ class Backtest(models.Model):
             heartbeat=float(self.heartbeat),
             data_handler=self.get_data_handler(),
             execution_handler=self.get_execution_handler(),
-            portfolio=Portfolio,
+            portfolio=self.get_portfolio(),
             strategy=self.get_strategy(),
             custom_parameters=self.create_backtest_parameters(),
         )

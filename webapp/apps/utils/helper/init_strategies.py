@@ -41,6 +41,22 @@ DEFAULT_STRATEGIES = {
 		'min': {},
 		'max': {},
 		'use_ml': True,
+	},
+	'IntradayOLSMRStrategy': {
+		'description': 'intraday for pairs...',
+		'parameters': {
+			'ols_window': 'number',
+			'zscore_low': 'number',
+			'zscore_high': 'number',
+		},
+		'defaults': {
+			'ols_window': '100',
+			'zscore_low': '0.5',
+			'zscore_high': '3.0',
+		},
+		'min': {},
+		'max': {},
+		'use_ml': True,
 	}
 }
 
@@ -50,14 +66,6 @@ def get_builtin(name):
 
 
 def create_or_update_default_strategies():
-	'''
-	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-	account = models.ForeignKey(Account, on_delete=models.CASCADE)
-	name = models.CharField(max_length=200)
-	description = models.TextField(blank=True, null=True)
-	strategy_parameters = JSONField(default={})
-	use_ml = models.BooleanField(default=False)
-	'''
 	curr_acc = Account.objects.all().filter(username='colinjianingxie').first()
 	for name, value in DEFAULT_STRATEGIES.items():
 		try:
