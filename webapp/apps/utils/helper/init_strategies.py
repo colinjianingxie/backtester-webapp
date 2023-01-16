@@ -23,6 +23,7 @@ DEFAULT_STRATEGIES = {
 			'short_window': 300,
 		},
 		'use_ml': False,
+		'number_stocks': 2,
 	},
 	'MLForecast': {
 		'description': 'This model uses a Quadratic Discriminant Analyser to predict \
@@ -41,6 +42,7 @@ DEFAULT_STRATEGIES = {
 		'min': {},
 		'max': {},
 		'use_ml': True,
+		'number_stocks': 2,
 	},
 	'IntradayOLSMRStrategy': {
 		'description': 'intraday for pairs...',
@@ -57,6 +59,7 @@ DEFAULT_STRATEGIES = {
 		'min': {},
 		'max': {},
 		'use_ml': True,
+		'number_stocks': 2,
 	}
 }
 
@@ -77,7 +80,8 @@ def create_or_update_default_strategies():
 				strategy_defaults=value['defaults'],
 				strategy_min=value['min'],
 				strategy_max=value['max'],
-				use_ml=value['use_ml'])
+				use_ml=value['use_ml'],
+				number_stocks=value['number_stocks'])
 		except Strategy.DoesNotExist:
 			strat = Strategy(
 				account=curr_acc,
@@ -87,5 +91,6 @@ def create_or_update_default_strategies():
 				strategy_defaults=value['defaults'],
 				strategy_min=value['min'],
 				strategy_max=value['max'],
-				use_ml=value['use_ml'])
+				use_ml=value['use_ml'],
+				number_stocks=value['number_stocks'])
 			strat.save()
