@@ -67,6 +67,9 @@ class PostPerformBacktestView(APIView):
         data_end_date = datetime.datetime.strptime(data_end_date, "%Y-%m-%d")
         portfolio_start_date = datetime.datetime.strptime(portfolio_start_date, "%Y-%m-%d")
 
+        if strategy == "IntradayOLSMRStrategy":
+            portfolio = "PortfolioHFT"
+            data_handler = "HistoricHFTDataHandler"
 
         try:
             backtest = Backtest.objects.get(

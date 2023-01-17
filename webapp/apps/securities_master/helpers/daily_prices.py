@@ -47,6 +47,7 @@ def get_minute_price_df(ticker, start_date=None, end_date=None):
     df = get_daily_price_df(ticker, start_date, end_date)
     df_std = df['adj_close_price'].std()
 
+
     minute_df = None
 
     for i in range(len(df)):
@@ -55,8 +56,8 @@ def get_minute_price_df(ticker, start_date=None, end_date=None):
         number_points = len(temp_day_range)
         temp_df['datetime']= temp_day_range
 
-        lower = df['adj_close_price'][:i+1].min() - df_std
-        upper = df['adj_close_price'][:i+1].max() + df_std
+        lower = min(df['adj_close_price'][:i+1].min() - 3 * df_std, 0)
+        upper = df['adj_close_price'][:i+1].max() + 3 * df_std
         start_price = df.iloc[i]['open_price']
         end_price = df.iloc[i]['adj_close_price']
         randomData = bounded_random_walk(number_points, lower_bound=lower, upper_bound=upper, start=start_price, end=end_price, std=df_std)
