@@ -56,11 +56,9 @@ $(".apply-backtest-daily-price").click(function() {
     const selected_ticker = $(this).data('ticker')
     const selected_strategy = $("#backtest-strategy-selected").data('strategy');
     $(`#selected-stock-${stock_index}`).data('ticker', selected_ticker);
-
     const tickers = $('[id*="selected-stock-"]').map(function() {
         return $(this).data('ticker');
     }).get();
-
 
     var options = {
       api: urls.backtest_daily_price,
@@ -70,12 +68,12 @@ $(".apply-backtest-daily-price").click(function() {
       },
       complete_function: function(){
         $('.backtestStockPickerModal').modal('hide');
+        updateDailyPriceChart('../..', tickers, backtestPriceChart)
       },
     }
 
     post_request_template(options, "#strategy-parameter-body")
 
-    updateDailyPriceChart('../..', tickers, backtestPriceChart)
 });
 
 $(".selectStrategy").click(function() {
