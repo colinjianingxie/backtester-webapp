@@ -55,6 +55,7 @@ $(".apply-backtest-daily-price").click(function() {
 
     const stock_index = $('#backtestStockPickerModalLabel').data('stock-index');
     const selected_ticker = $(this).data('ticker')
+    const selected_strategy = $("#backtest-strategy-selected").data('strategy');
     $(`#selected-stock-${stock_index}`).data('ticker', selected_ticker);
 
     const tickers = $('[id*="selected-stock-"]').map(function() {
@@ -66,6 +67,7 @@ $(".apply-backtest-daily-price").click(function() {
       api: urls.backtest_daily_price,
       body: {
         tickers: JSON.stringify(tickers),
+        strategy: selected_strategy,
       },
       complete_function: function(){
         $('.backtestStockPickerModal').modal('hide');

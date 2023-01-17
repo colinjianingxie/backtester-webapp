@@ -1,7 +1,9 @@
 window.onload = function() {
-  //const ticker = $('#stock-label-0').data('ticker');
-  //updateDailyPriceChart('../..', ticker, backtestPriceChart)
-  console.log("{{backtest_selected_strategy}}")
+  const tickers = $('[id*="selected-stock-"]').map(function() {
+      return $(this).data('ticker');
+  }).get();
+
+  updateDailyPriceChart('../..', tickers, backtestPriceChart)
 };
 
 function go_to_result(response_data) {

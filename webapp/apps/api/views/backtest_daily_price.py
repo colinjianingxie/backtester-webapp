@@ -4,6 +4,7 @@ import json
 from api.views.helper import api_response
 from api.views.helper import ResponseStatus
 from django.shortcuts import render
+from main.models import Strategy
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from securities_master.helpers.daily_prices import get_daily_price_df
@@ -17,21 +18,19 @@ class BacktestDailyPriceView(APIView):
     """
     def post(self, request):
 
-        tickers = request.POST['tickers']
-        context = self.context_daily_price_helper(tickers)
+        tickers = json.loads(request.POST['tickers'])
+        strategy = request.POST['strategy']
+        context = self.context_daily_price_helper(tickers, strategy)
         return render(request, "apps/dashboard/components/backtest/backtest_parameters.html", context)
 
-    def context_daily_price_helper(self, tickers):
+    def context_daily_price_helper(self, tickers, strategy):
         context = {}
-        '''
         context['selected_stocks'] = {}
-        Symbol.objects.filter(ticker=ticker).first()
-        for i in backtest_selected_strategy.number_stocks_range:
-            curr_symb = distinct_symbols[i]
-            curr_dp = DailyPrice.objects.all().filter(symbol=curr_symb).order_by('-price_date').first()
+        selected_strategy = Strategy.objects.all().filter(name=strategy).first()
+        context["backtest_selected_strategy"] = selected_strategy
+        for i in range(len(tickers)):
+            curr_symb = Symbol.objects.all().filter(ticker=tickers[i]).first()
             context[f"selected_stocks"][i] = curr_symb
 
-        latest_price = DailyPrice.objects.all().filter(symbol__ticker=ticker).order_by('-price_date').first()
-        context["backtest_selected_stock_0"] = latest_price
-        '''
+
         return context
