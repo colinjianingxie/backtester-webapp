@@ -25,7 +25,7 @@ Main
     window.onload = function() {
       const segments = window.location.pathname.split("/");
       const ticker = segments.pop() || segments.pop();
-      updateDailyPriceChart('../../..', ticker, dpChart);
+      updateDailyPriceChart('../../..', [ticker], dpChart);
     };
 
 

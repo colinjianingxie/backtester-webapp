@@ -79,6 +79,7 @@ class StrategyAdmin(admin.ModelAdmin):
         "strategy_defaults",
         "strategy_min",
         "strategy_max",
+        "number_stocks",
         "use_ml",
     )  # What to display as columns in
     search_fields = (

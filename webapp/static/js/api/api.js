@@ -67,13 +67,14 @@ function post_request_template(options, elementSelector){
 }
 
 function get_chart_json(options, chart){
+  chart.updateOptions({
+    series: []
+  });
   $.ajax({
     url:options.api,
     type: "GET",
     success:function(response){
-      chart.updateSeries([{
-          data: response.data
-      }])
+      chart.appendSeries(response.data);
     },
     complete:function(){
     },

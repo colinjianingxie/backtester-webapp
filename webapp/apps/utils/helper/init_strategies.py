@@ -23,7 +23,7 @@ DEFAULT_STRATEGIES = {
 			'short_window': 300,
 		},
 		'use_ml': False,
-		'number_stocks': 2,
+		'number_stocks': 1,
 	},
 	'MLForecast': {
 		'description': 'This model uses a Quadratic Discriminant Analyser to predict \
@@ -42,7 +42,7 @@ DEFAULT_STRATEGIES = {
 		'min': {},
 		'max': {},
 		'use_ml': True,
-		'number_stocks': 2,
+		'number_stocks': 1,
 	},
 	'IntradayOLSMRStrategy': {
 		'description': 'intraday for pairs...',

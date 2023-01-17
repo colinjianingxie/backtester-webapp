@@ -1,0 +1,31 @@
+{% load custom_tags %}
+{% block parameter-selection %}
+<form id="backtest-parameter-form" class="col-lg-6" data-number-stocks="{{backtest_selected_strategy.number_stocks}}">
+    {% for pName, pType in backtest_selected_strategy.strategy_parameters.items %}
+        <label for="{{pName}}" class="col-md-2 col-form-label">{{pName}}</label>
+        <input class="form-control" data-parameter-name="{{pName}}" type="{{pType}}" value="{{backtest_selected_strategy.strategy_defaults|get_item:pName}}" id="{{pName}}">
+    {% endfor %}
+</form>
+<div id="backtest-stock-selection">
+{{selected_stocks}}
+{% for i in backtest_selected_strategy.number_stocks_range %}
+<div class="col-sm-4">
+    <div class="card mini-stats-wid">
+        <div class="card-body">
+            <div class="d-flex">
+                <div class="flex-shrink-0 me-3 align-self-center">
+                    <i class="mdi mdi-bitcoin h2 text-warning mb-0"></i>
+                </div>
+                <div class="flex-grow-1" id="selected-stock-{{i}}" data-ticker="{{selected_stocks|get_item:i}}">
+                    <p class="text-muted mb-2">{{selected_stocks|get_item:i}}</p>
+                    <h5 class="mb-0">price <span class="font-size-14 text-muted">= ${{backtest_selected_stock_0.adj_close_price}}</span></h5>
+                    <a data-bs-toggle="modal" data-bs-target=".backtestStockPickerModal" data-bs-stock-index="{{i}}">(modify)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+</div>
+{% endblock %}

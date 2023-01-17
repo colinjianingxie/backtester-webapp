@@ -8,8 +8,12 @@ class GetDailyPriceCoordinatesJSONView(APIView):
     """Verifies that the server is running"""
     def get(self, request, ticker):
         content = {}
+
         price_df = self.get_prices(ticker, request)
-        content['data'] = price_df
+        content['data'] = {
+            'name': ticker,
+            'data': price_df
+        }
         return Response(content)
 
     def get_prices(self, ticker, request):

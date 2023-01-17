@@ -70,27 +70,14 @@ Dashboard
                                   </div>
 
                                   <p class="text-muted mb-2">Strategy</p>
-                                  <h5 id="backtest-strategy-selected" data-strategy='{{backtest_default_strategy.name}}'>{{backtest_default_strategy.name}}</h5>
+                                  <h5 id="backtest-strategy-selected" data-strategy='{{backtest_selected_strategy.name}}'>{{backtest_selected_strategy.name}}</h5>
 
                                   <div class="mt-3">
                                       <button class="btn btn-primary btn-sm w-md" data-bs-toggle="modal" data-bs-target=".strategySelectModal">Modify</button>
                                   </div>
                               </div>
                           </div>
-                          <div class="col-sm-4">
-                              <div class="mt-4 mt-sm-0">
-                                  <div class="font-size-24 text-primary mb-2">
-                                      <i class="bx bx-wallet"></i>
-                                  </div>
 
-                                  <p class="text-muted mb-2">Parameters</p>
-                                  <h5>{...}</h5>
-
-                                  <div class="mt-3">
-                                      <button class="btn btn-primary btn-sm w-md" data-bs-toggle="modal" data-bs-target=".strategyParametersModal">Modify</button>
-                                  </div>
-                              </div>
-                          </div>
                           <div class="col-sm-4">
                               <div class="mt-4 mt-sm-0">
                                   <div class="font-size-24 text-primary mb-2">
@@ -127,21 +114,20 @@ Dashboard
               </div>
           </div>
       </div>
-      <div class="col-xl-8">
-          <div class="row">
-              <div id="backtest-stock-selection">
-              {% block stock-selection %}
-                  {% include 'apps/dashboard/components/backtest/stock_selection.html' %}
-              {% endblock %}
-              </div>
-              <div class="card">
-                  <div class="card-body">
-                      <h4 class="card-title mb-3">Overview</h4>
-                      <div class="apex-charts" id="backtest-daily-price-chart" dir="ltr"></div>
-                  </div>
-              </div>
-          </div>
+
+      <div class="col-xl-8" id="strategy-parameter-body">
+
+        {% block parameter-selection %}
+            {% include 'apps/dashboard/components/backtest/backtest_parameters.html' %}
+        {% endblock %}
+
       </div>
+      <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-3">Overview</h4>
+                <div class="apex-charts" id="backtest-daily-price-chart" dir="ltr"></div>
+            </div>
+        </div>
   </div>
   <!-- end row -->
 </div>
@@ -149,10 +135,12 @@ Dashboard
 
 {% endblock %}
 {% block extra_javascript %}
-
+<script src="{% static 'js/services/init_backtest.js' %}"></script>
 <script>
     backtestPriceChart.render();
+    //generateStockCards(parseInt('{{backtest_selected_strategy.number_stocks|safe}}'))
+
 </script>
-<script src="{% static 'js/services/init_backtest.js' %}"></script>
+
 <script src="{% static 'js/api/backtest.js' %}"></script>
 {% endblock %}

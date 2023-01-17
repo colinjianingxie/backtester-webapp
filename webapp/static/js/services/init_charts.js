@@ -1,7 +1,7 @@
 
 
 var candleChartOptions = {
-      series: [{data: []}],
+      series: [],
       chart: {
           type: 'candlestick',
           height: 310,
@@ -49,7 +49,7 @@ var backtestReturnsOptions = {
         curve: 'smooth',
         width: 3,
     },
-    series: [{data: []}],
+    series: [],
     colors: ['#556ee6'],
     xaxis: {
         type: 'datetime',
@@ -86,7 +86,7 @@ var backtestDrawdownsOptions = {
         curve: 'smooth',
         width: 3,
     },
-    series: [{data: []}],
+    series: [],
     colors: ['#556ee6'],
     xaxis: {
         type: 'datetime',
@@ -123,7 +123,7 @@ var backtestValuesOptions = {
         curve: 'smooth',
         width: 3,
     },
-    series: [{data: []}],
+    series: [],
     colors: ['#556ee6'],
     xaxis: {
         type: 'datetime',
@@ -142,12 +142,14 @@ var backtestValuesOptions = {
     }
 }
 
-function updateDailyPriceChart(endpoint_base, ticker, chartVariable) {
+function updateDailyPriceChart(endpoint_base, tickers, chartVariable) {
   // TODO: Try to get endpoint_base to be dynamic instead of hardcoded...
-  var chartOptions = {
-      api: `${endpoint_base}/${urls.get_daily_price_coordinates_json}/${ticker}`,
+  for(const ticker of tickers){
+    var chartOptions = {
+        api: `${endpoint_base}/${urls.get_daily_price_coordinates_json}/${ticker}`,
+    }
+    get_chart_json(chartOptions, chartVariable)
   }
-  get_chart_json(chartOptions, chartVariable)
 }
 
 var backtestReturnsChart = new ApexCharts(document.querySelector("#backtest-returns-chart"), backtestReturnsOptions);

@@ -21,5 +21,9 @@ class Strategy(models.Model):
     use_ml = models.BooleanField(default=False)
     number_stocks = models.IntegerField(default=1)
 
+    @property
+    def number_stocks_range(self):
+        return range(self.number_stocks)
+
     def __str__(self):
         return f"{self.id}"

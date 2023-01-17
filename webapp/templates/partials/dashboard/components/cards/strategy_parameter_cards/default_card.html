@@ -1,9 +1,0 @@
-{% load custom_tags %}
-{% block strategy_parameter_card %}
-<form id="backtest-parameter-form" class="col-lg-6">
-    {% for pName, pType in backtest_default_strategy.strategy_parameters.items %}
-        <label for="{{pName}}" class="col-md-2 col-form-label">{{pName}}</label>
-        <input class="form-control" data-parameter-name="{{pName}}" type="{{pType}}" value="{{backtest_default_strategy.strategy_defaults|get_item:pName}}" id="{{pName}}">
-    {% endfor %}
-</form>
-{% endblock%}

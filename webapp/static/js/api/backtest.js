@@ -51,18 +51,30 @@ $("#perform-backtest").click(function() {
 
 $(".apply-backtest-daily-price").click(function() {
     // Refreshes stock picker...
-    const ticker = $(this).data('ticker');
+
+
+    const stock_index = $('#backtestStockPickerModalLabel').data('stock-index');
+    const selected_ticker = $(this).data('ticker')
+    $(`#selected-stock-${stock_index}`).data('ticker', selected_ticker);
+
+    const tickers = $('[id*="selected-stock-"]').map(function() {
+        return $(this).data('ticker');
+    }).get();
+
+
     var options = {
       api: urls.backtest_daily_price,
       body: {
-        ticker: ticker,
+        tickers: JSON.stringify(tickers),
       },
-      complete_function: closeBacktestStockPickerModal,
+      complete_function: function(){
+        $('.backtestStockPickerModal').modal('hide');
+      },
     }
 
     post_request_template(options, "#backtest-stock-selection")
 
-    updateDailyPriceChart('../..', ticker, backtestPriceChart)
+    updateDailyPriceChart('../..', tickers, backtestPriceChart)
 });
 
 $(".selectStrategy").click(function() {
@@ -77,8 +89,10 @@ $(".selectStrategy").click(function() {
       body: {
         strategy: strategy,
       },
-      complete_function: closeBacktestParameterModal,
+      complete_function: function(){
+        $('#backtest-parameter-form').data("number-stocks");
+        $('.strategySelectModal').modal('hide');
+      },
     }
     post_request_template(options, "#strategy-parameter-body");
-
 });
