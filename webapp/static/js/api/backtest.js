@@ -4,8 +4,9 @@ $("#perform-backtest").click(function() {
     const start_date = $("#backtest-data-start-date").val()
     const end_date = $("#backtest-data-end-date").val()
     const portfolio_start_date = $("#backtest-portfolio-start-date").val()
-    const ticker = $('#stock-label-0').data('ticker');
-    const symbol_list=[ticker]
+    const symbol_list = $('[id*="selected-stock-"]').map(function() {
+        return $(this).data('ticker');
+    }).get();
     const initial_capital= $('#initial-backtest-value').data('initial-capital')
     const strategy= $("#backtest-strategy-selected").data('strategy')
     var strategy_parameters = {};
@@ -51,8 +52,6 @@ $("#perform-backtest").click(function() {
 
 $(".apply-backtest-daily-price").click(function() {
     // Refreshes stock picker...
-
-
     const stock_index = $('#backtestStockPickerModalLabel').data('stock-index');
     const selected_ticker = $(this).data('ticker')
     const selected_strategy = $("#backtest-strategy-selected").data('strategy');
@@ -74,7 +73,7 @@ $(".apply-backtest-daily-price").click(function() {
       },
     }
 
-    post_request_template(options, "#backtest-stock-selection")
+    post_request_template(options, "#strategy-parameter-body")
 
     updateDailyPriceChart('../..', tickers, backtestPriceChart)
 });
