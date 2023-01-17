@@ -92,9 +92,13 @@ $(".selectStrategy").click(function() {
         strategy: strategy,
       },
       complete_function: function(){
-        $('#backtest-parameter-form').data("number-stocks");
         $('.strategySelectModal').modal('hide');
+        const tickers = $('[id*="selected-stock-"]').map(function() {
+            return $(this).data('ticker');
+        }).get();
+        updateDailyPriceChart('../..', tickers, backtestPriceChart)
       },
     }
     post_request_template(options, "#strategy-parameter-body");
+
 });
