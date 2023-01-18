@@ -13,9 +13,9 @@ from main.system.data_handler import HistoricHFTDataHandler
 from main.system.execution_handler import SimulatedExecutionHandler
 from main.system.portfolio import Portfolio
 from main.system.portfolio import PortfolioHFT
+from main.system.strategy.default.intraday_mr import IntradayOLSMRStrategy
 from main.system.strategy.default.ml_forecast import MLForecast
 from main.system.strategy.default.moving_average_crossover import MovingAverageCrossover
-from main.system.strategy.default.intraday_mr import IntradayOLSMRStrategy
 from oauth.models.user_model import Account
 # Functions for actual backtesting
 
@@ -30,9 +30,6 @@ class Backtest(models.Model):
     symbol_list = ArrayField(models.CharField(max_length=10, blank=True), size=15)
     initial_capital = models.DecimalField(max_digits=20, decimal_places=4, blank=True, null=True)
     heartbeat = models.DecimalField(max_digits=5, decimal_places=1, blank=True, null=True)
-    data_handler = models.CharField(max_length=200)
-    execution_handler = models.CharField(max_length=200)
-    portfolio = models.CharField(max_length=200)
     strategy = models.ForeignKey(Strategy, on_delete=models.CASCADE)
     strategy_parameters = JSONField(default={})
     data_start_date = models.DateTimeField("data start date")
@@ -55,14 +52,12 @@ class Backtest(models.Model):
         }
 
     def get_data_handler(self):
-        if self.data_handler == "HistoricDataHandler":
-            return HistoricDataHandler
-        elif self.data_handler == "HistoricHFTDataHandler":
+        if self.strategy.use_hft:
             return HistoricHFTDataHandler
+        return HistoricDataHandler
 
     def get_execution_handler(self):
-        if self.execution_handler == "SimulatedExecutionHandler":
-            return SimulatedExecutionHandler
+        return SimulatedExecutionHandler
 
     def get_strategy(self):
         if self.strategy.name == 'MLForecast':
@@ -73,12 +68,14 @@ class Backtest(models.Model):
             return IntradayOLSMRStrategy
 
     def get_portfolio(self):
-        if self.portfolio == "Portfolio":
-            return Portfolio
-        elif self.portfolio == "PortfolioHFT":
+        print("HERE", self.strategy.use_hft)
+        if self.strategy.use_hft:
+
             return PortfolioHFT
+        return Portfolio
 
     def create_backtest(self):
+        print(self.strategy.name)
         backtest = bt(
             symbol_list=self.symbol_list,
             initial_capital=float(self.initial_capital),

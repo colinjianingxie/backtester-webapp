@@ -19,6 +19,7 @@ class Strategy(models.Model):
     strategy_min = JSONField(default={})
     strategy_max = JSONField(default={})
     use_ml = models.BooleanField(default=False)
+    use_hft = models.BooleanField(default=False)
     number_stocks = models.IntegerField(default=1)
 
     @property

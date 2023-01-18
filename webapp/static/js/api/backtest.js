@@ -11,9 +11,6 @@ $("#perform-backtest").click(function() {
     const strategy= $("#backtest-strategy-selected").data('strategy')
     var strategy_parameters = {};
     const heartbeat=0.0
-    const data_handler="HistoricDataHandler"
-    const execution_handler="SimulatedExecutionHandler"
-    const portfolio="Portfolio"
 
     const beforeText = 'Perform Backtest'
     const loaderText = '<i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i> Loading';
@@ -31,9 +28,6 @@ $("#perform-backtest").click(function() {
         symbol_list: JSON.stringify(symbol_list),
         initial_capital: initial_capital,
         heartbeat: heartbeat,
-        data_handler: data_handler,
-        execution_handler: execution_handler,
-        portfolio: portfolio,
         strategy: strategy,
         strategy_parameters: JSON.stringify(strategy_parameters),
         data_start_date: start_date,

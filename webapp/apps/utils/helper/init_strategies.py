@@ -23,6 +23,7 @@ DEFAULT_STRATEGIES = {
 			'short_window': 300,
 		},
 		'use_ml': False,
+		'use_hft': False,
 		'number_stocks': 1,
 	},
 	'MLForecast': {
@@ -42,6 +43,7 @@ DEFAULT_STRATEGIES = {
 		'min': {},
 		'max': {},
 		'use_ml': True,
+		'use_hft': False,
 		'number_stocks': 1,
 	},
 	'IntradayOLSMRStrategy': {
@@ -58,7 +60,8 @@ DEFAULT_STRATEGIES = {
 		},
 		'min': {},
 		'max': {},
-		'use_ml': True,
+		'use_ml': False,
+		'use_hft': True,
 		'number_stocks': 2,
 	}
 }
@@ -81,6 +84,7 @@ def create_or_update_default_strategies():
 				strategy_min=value['min'],
 				strategy_max=value['max'],
 				use_ml=value['use_ml'],
+				use_hft=value['use_hft'],
 				number_stocks=value['number_stocks'])
 		except Strategy.DoesNotExist:
 			strat = Strategy(
@@ -92,5 +96,6 @@ def create_or_update_default_strategies():
 				strategy_min=value['min'],
 				strategy_max=value['max'],
 				use_ml=value['use_ml'],
+				use_hft=value['use_hft'],
 				number_stocks=value['number_stocks'])
 			strat.save()

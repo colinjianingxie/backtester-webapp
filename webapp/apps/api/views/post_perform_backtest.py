@@ -19,9 +19,6 @@ class PostPerformBacktestView(APIView):
         symbol_list = request.POST['symbol_list']
         initial_capital = request.POST['initial_capital']
         heartbeat = request.POST['heartbeat']
-        data_handler = request.POST['data_handler']
-        execution_handler = request.POST['execution_handler']
-        portfolio = request.POST['portfolio']
         strategy = request.POST['strategy']
         strategy_parameters = request.POST['strategy_parameters']
         data_start_date = request.POST['data_start_date']
@@ -34,9 +31,6 @@ class PostPerformBacktestView(APIView):
             symbol_list,
             initial_capital,
             heartbeat,
-            data_handler,
-            execution_handler,
-            portfolio,
             strategy,
             strategy_parameters,
             data_start_date,
@@ -51,9 +45,6 @@ class PostPerformBacktestView(APIView):
         symbol_list,
         initial_capital,
         heartbeat,
-        data_handler,
-        execution_handler,
-        portfolio,
         strategy,
         strategy_parameters,
         data_start_date,
@@ -67,10 +58,6 @@ class PostPerformBacktestView(APIView):
         data_end_date = datetime.datetime.strptime(data_end_date, "%Y-%m-%d")
         portfolio_start_date = datetime.datetime.strptime(portfolio_start_date, "%Y-%m-%d")
 
-        if strategy == "IntradayOLSMRStrategy":
-            portfolio = "PortfolioHFT"
-            data_handler = "HistoricHFTDataHandler"
-
         try:
             backtest = Backtest.objects.get(
                 account=request.user,
@@ -78,9 +65,6 @@ class PostPerformBacktestView(APIView):
                 symbol_list=symbol_list,
                 initial_capital=initial_capital,
                 heartbeat=heartbeat,
-                data_handler=data_handler,
-                execution_handler=execution_handler,
-                portfolio=portfolio,
                 strategy=strategy_obj,
                 strategy_parameters=strategy_parameters,
                 data_start_date = data_start_date,
@@ -94,9 +78,6 @@ class PostPerformBacktestView(APIView):
                 symbol_list=symbol_list,
                 initial_capital=initial_capital,
                 heartbeat=heartbeat,
-                data_handler=data_handler,
-                execution_handler=execution_handler,
-                portfolio=portfolio,
                 strategy=strategy_obj,
                 strategy_parameters=strategy_parameters,
                 data_start_date = data_start_date,

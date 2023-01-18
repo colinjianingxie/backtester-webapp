@@ -20,8 +20,8 @@ class Command(BaseCommand):
 
         base = str(os.path.join(settings.BASE_DIR, 'apps'))
         migrations = glob.glob(os.path.join(base, "*", "migrations"))
-        delete_migrations = input('Delete all migrations? y/N ')
-
+        #delete_migrations = input('Delete all migrations? y/N ')
+        delete_migrations = 'y'
         if delete_migrations == 'y' or delete_migrations == 'Y':
             for migration in migrations:
                 for f in listdir(migration):
@@ -30,7 +30,8 @@ class Command(BaseCommand):
                         print(f"Successfully deleted: {str(temp_file)}")
                         os.remove(temp_file)
 
-        delete_db = input('Delete database file? y/N ')
+        #delete_db = input('Delete database file? y/N ')
+        delete_db = 'y'
         if delete_db == 'y' or delete_db == 'Y':
             with connection.cursor() as cursor:
                 cursor.execute("DROP SCHEMA public CASCADE;")
