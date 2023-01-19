@@ -3,14 +3,12 @@ $("#perform-backtest").click(function() {
     const name="Test_bt2"
     const start_date = $("#backtest-data-start-date").val()
     const end_date = $("#backtest-data-end-date").val()
-    const portfolio_start_date = $("#backtest-portfolio-start-date").val()
     const symbol_list = $('[id*="selected-stock-"]').map(function() {
         return $(this).data('ticker');
     }).get();
     const initial_capital= $('#initial-backtest-value').data('initial-capital')
     const strategy= $("#backtest-strategy-selected").data('strategy')
     var strategy_parameters = {};
-    const heartbeat=0.0
 
     const beforeText = 'Perform Backtest'
     const loaderText = '<i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i> Loading';
@@ -27,12 +25,10 @@ $("#perform-backtest").click(function() {
         name: name,
         symbol_list: JSON.stringify(symbol_list),
         initial_capital: initial_capital,
-        heartbeat: heartbeat,
         strategy: strategy,
         strategy_parameters: JSON.stringify(strategy_parameters),
         data_start_date: start_date,
         data_end_date: end_date,
-        portfolio_start_date: portfolio_start_date,
       },
       success_url: urls.backtest_result,
       data_function: go_to_result,

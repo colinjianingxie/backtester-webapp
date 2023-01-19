@@ -1,11 +1,26 @@
 {% load custom_tags %}
 {% block parameter-selection %}
-<form id="backtest-parameter-form" class="col-lg-6" data-number-stocks="{{backtest_selected_strategy.number_stocks}}">
-    {% for pName, pType in backtest_selected_strategy.strategy_parameters.items %}
-        <label for="{{pName}}" class="col-md-2 col-form-label">{{pName}}</label>
-        <input class="form-control" data-parameter-name="{{pName}}" type="{{pType}}" value="{{backtest_selected_strategy.strategy_defaults|get_item:pName}}" id="{{pName}}">
-    {% endfor %}
-</form>
+<div class="card">
+  <div class="card-body">
+      <p class="text-muted mb-4">Strategy Settings</p>
+      <div class="row">
+          <div class="col-lg-12">
+              <form id="backtest-parameter-form" data-number-stocks="{{backtest_selected_strategy.number_stocks}}">
+                  {% for pName, pType in backtest_selected_strategy.strategy_parameters.items %}
+                  <div class="mb-3 row">
+                      <label for="{{pName}}" class="col-md-4 col-form-label">{{pName}}</label>
+                      <div class="col-md-8">
+                          <input class="form-control" data-parameter-name="{{pName}}" type="{{pType}}" value="{{backtest_selected_strategy.strategy_defaults|get_item:pName}}" id="{{pName}}">
+                      </div>
+                  </div>
+                  {% endfor %}
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+
 <div id="backtest-stock-selection">
 {% for i in backtest_selected_strategy.number_stocks_range %}
 <div class="col-sm-4">

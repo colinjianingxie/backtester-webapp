@@ -18,7 +18,6 @@ class PostPerformBacktestView(APIView):
         name = request.POST['name']
         symbol_list = request.POST['symbol_list']
         initial_capital = request.POST['initial_capital']
-        heartbeat = request.POST['heartbeat']
         strategy = request.POST['strategy']
         strategy_parameters = request.POST['strategy_parameters']
         data_start_date = request.POST['data_start_date']
@@ -30,7 +29,6 @@ class PostPerformBacktestView(APIView):
             name,
             symbol_list,
             initial_capital,
-            heartbeat,
             strategy,
             strategy_parameters,
             data_start_date,
@@ -44,7 +42,6 @@ class PostPerformBacktestView(APIView):
         name,
         symbol_list,
         initial_capital,
-        heartbeat,
         strategy,
         strategy_parameters,
         data_start_date,
@@ -64,7 +61,6 @@ class PostPerformBacktestView(APIView):
                 name=name,
                 symbol_list=symbol_list,
                 initial_capital=initial_capital,
-                heartbeat=heartbeat,
                 strategy=strategy_obj,
                 strategy_parameters=strategy_parameters,
                 data_start_date = data_start_date,
@@ -77,7 +73,6 @@ class PostPerformBacktestView(APIView):
                 name=name,
                 symbol_list=symbol_list,
                 initial_capital=initial_capital,
-                heartbeat=heartbeat,
                 strategy=strategy_obj,
                 strategy_parameters=strategy_parameters,
                 data_start_date = data_start_date,

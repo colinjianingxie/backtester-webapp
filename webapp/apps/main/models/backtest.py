@@ -29,7 +29,6 @@ class Backtest(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     symbol_list = ArrayField(models.CharField(max_length=10, blank=True), size=15)
     initial_capital = models.DecimalField(max_digits=20, decimal_places=4, blank=True, null=True)
-    heartbeat = models.DecimalField(max_digits=5, decimal_places=1, blank=True, null=True)
     strategy = models.ForeignKey(Strategy, on_delete=models.CASCADE)
     strategy_parameters = JSONField(default={})
     data_start_date = models.DateTimeField("data start date")
@@ -76,7 +75,7 @@ class Backtest(models.Model):
         backtest = bt(
             symbol_list=self.symbol_list,
             initial_capital=float(self.initial_capital),
-            heartbeat=float(self.heartbeat),
+            heartbeat=0.0,
             data_handler=self.get_data_handler(),
             execution_handler=self.get_execution_handler(),
             portfolio=self.get_portfolio(),
