@@ -123,33 +123,20 @@ Backtest Results
     backtestReturnsChart.render();
     backtestDrawdownsChart.render();
     backtestValuesChart.render();
-
     backtestReturnsChart.updateOptions({
       series: [{
-          data: JSON.parse('{{backtest_returns|safe}}')
-      }],
-      xaxis: {
-          type: 'datetime',
-          categories: JSON.parse('{{backtest_indexes|safe}}'),
-      },
+        data: parseStringArray("{{backtest_result.result_returns_coordinates|safe}}")
+      }]
     });
     backtestDrawdownsChart.updateOptions({
       series: [{
-          data: JSON.parse('{{backtest_drawdowns|safe}}')
-      }],
-      xaxis: {
-          type: 'datetime',
-          categories: JSON.parse('{{backtest_indexes|safe}}'),
-      },
+        data: parseStringArray("{{backtest_result.result_drawdowns_coordinates|safe}}")
+      }]
     });
     backtestValuesChart.updateOptions({
       series: [{
-          data: JSON.parse('{{backtest_portfolio_values|safe}}')
-      }],
-      xaxis: {
-          type: 'datetime',
-          categories: JSON.parse('{{backtest_indexes|safe}}'),
-      },
+        data: parseStringArray("{{backtest_result.result_values_coordinates|safe}}")
+      }]
     });
 </script>
 

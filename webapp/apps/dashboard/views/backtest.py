@@ -49,13 +49,8 @@ class BacktestResultsView(LoginRequiredMixin, GroupRequiredMixin,TemplateView):
         context = super().get_context_data(**kwargs)
 
         result = self.get_backtest_result(context)
-        backtest_results = result.backtest.perform_backtest(save_result=False)
 
         context['backtest_result'] = result
-        context['backtest_indexes'] = backtest_results['backtest_indexes']
-        context['backtest_returns'] = backtest_results['backtest_returns']
-        context['backtest_drawdowns'] = backtest_results['backtest_drawdowns']
-        context['backtest_portfolio_values'] = backtest_results['backtest_portfolio_values']
 
         return context
 

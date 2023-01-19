@@ -68,14 +68,11 @@ class Backtest(models.Model):
             return IntradayOLSMRStrategy
 
     def get_portfolio(self):
-        print("HERE", self.strategy.use_hft)
         if self.strategy.use_hft:
-
             return PortfolioHFT
         return Portfolio
 
     def create_backtest(self):
-        print(self.strategy.name)
         backtest = bt(
             symbol_list=self.symbol_list,
             initial_capital=float(self.initial_capital),
@@ -107,6 +104,10 @@ class Backtest(models.Model):
             fills = stats['fills'],
             status="SUCCESS",
             start_simulation_time=start_simulation_time,
+            graph_indexes = equity_curve.index.strftime("%Y-%m-%d").tolist(),
+            graph_returns = equity_curve['returns'].tolist(),
+            graph_drawdowns = equity_curve['drawdown'].tolist(),
+            graph_portfolio_values = equity_curve['equity_curve'].fillna(0).round(3).tolist(),
             end_simulation_time=end_simulation_time,
             duration=duration
             )
@@ -117,10 +118,6 @@ class Backtest(models.Model):
         response_data = {
             'backtest_id': str(self.id),
             'backtest_result_id': str(backtest_result.id),
-            'backtest_indexes': json.dumps(equity_curve.index.strftime('%Y-%m-%d').tolist()),
-            'backtest_returns': json.dumps(equity_curve['returns'].tolist()),
-            'backtest_drawdowns': json.dumps(equity_curve['drawdown'].tolist()),
-            'backtest_portfolio_values': json.dumps(equity_curve['equity_curve'].fillna(0).round(3).tolist()),
         }
 
         return response_data
@@ -147,7 +144,24 @@ class BacktestResult(models.Model):
     start_simulation_time = models.DateTimeField("start_simulation_time")
     end_simulation_time = models.DateTimeField("end_simulation_time")
     duration = models.DurationField()
+    graph_indexes = ArrayField(models.CharField(max_length=10, blank=True))
+    graph_returns = ArrayField(models.DecimalField(max_digits=10, decimal_places=3))
+    graph_drawdowns = ArrayField(models.DecimalField(max_digits=10, decimal_places=3))
+    graph_portfolio_values = ArrayField(models.DecimalField(max_digits=15, decimal_places=3))
     created_date = models.DateTimeField("created date", auto_now_add=True)
+
+
+    @property
+    def result_returns_coordinates(self):
+        return [{"x": x, "y": float(y)} for x, y in zip(self.graph_indexes, self.graph_returns)]
+
+    @property
+    def result_drawdowns_coordinates(self):
+        return [{"x": x, "y": float(y)} for x, y in zip(self.graph_indexes, self.graph_drawdowns)]
+
+    @property
+    def result_values_coordinates(self):
+        return [{"x": x, "y": float(y)} for x, y in zip(self.graph_indexes, self.graph_portfolio_values)]
 
     @property
     def display_duration(self):
