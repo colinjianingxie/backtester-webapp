@@ -7,6 +7,7 @@ from main.models import Backtest
 from main.models import Strategy
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from securities_master.models import Symbol
 #from utils.helper import api_response
 #TODO: Possible race condition of sending requests at same time...
 
@@ -37,6 +38,9 @@ class PostPerformBacktestView(APIView):
         )
         return Response(response_data)
 
+    def get_symbol_list(self, symbol_list):
+        return [sym for sym in Symbol.objects.all().filter(ticker__in=symbol_list)]
+
     def perform_backtest_helper(self,
         request,
         name,
@@ -48,38 +52,29 @@ class PostPerformBacktestView(APIView):
         data_end_date,
         portfolio_start_date):
 
-        symbol_list = json.loads(symbol_list)
+        #symbol_list = json.loads(symbol_list)
+        symbol_list = self.get_symbol_list(json.loads(symbol_list))
+        print("HERE: ", symbol_list)
         strategy_obj = Strategy.objects.all().filter(name=strategy).first()
         strategy_parameters = json.loads(strategy_parameters)
         data_start_date = datetime.datetime.strptime(data_start_date, "%Y-%m-%d")
         data_end_date = datetime.datetime.strptime(data_end_date, "%Y-%m-%d")
         portfolio_start_date = datetime.datetime.strptime(portfolio_start_date, "%Y-%m-%d")
 
-        try:
-            backtest = Backtest.objects.get(
-                account=request.user,
-                name=name,
-                symbol_list=symbol_list,
-                initial_capital=initial_capital,
-                strategy=strategy_obj,
-                strategy_parameters=strategy_parameters,
-                data_start_date = data_start_date,
-                data_end_date = data_end_date,
-                portfolio_start_date = portfolio_start_date,
-            )
-        except Backtest.DoesNotExist:
-            backtest = Backtest(
-                account=request.user,
-                name=name,
-                symbol_list=symbol_list,
-                initial_capital=initial_capital,
-                strategy=strategy_obj,
-                strategy_parameters=strategy_parameters,
-                data_start_date = data_start_date,
-                data_end_date = data_end_date,
-                portfolio_start_date = portfolio_start_date,
-            )
-            backtest.save()
+        backtest = Backtest(
+            account=request.user,
+            name=name,
+            #symbol_list=symbol_list,
+            initial_capital=initial_capital,
+            strategy=strategy_obj,
+            strategy_parameters=strategy_parameters,
+            data_start_date = data_start_date,
+            data_end_date = data_end_date,
+            portfolio_start_date = portfolio_start_date,
+        )
+
+        backtest.save()
+        backtest.symbol_list.set(symbol_list) # TODO: Runs lots of queries, better way is to .add(a, b, c)
 
         backtest_results = backtest.perform_backtest()
 

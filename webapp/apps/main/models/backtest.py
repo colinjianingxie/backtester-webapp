@@ -17,6 +17,7 @@ from main.system.strategy.default.intraday_mr import IntradayOLSMRStrategy
 from main.system.strategy.default.ml_forecast import MLForecast
 from main.system.strategy.default.moving_average_crossover import MovingAverageCrossover
 from oauth.models.user_model import Account
+from securities_master.models import Symbol
 # Functions for actual backtesting
 
 class Backtest(models.Model):
@@ -27,7 +28,7 @@ class Backtest(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, blank=True, null=True)
-    symbol_list = ArrayField(models.CharField(max_length=10, blank=True), size=15)
+    symbol_list = models.ManyToManyField(Symbol, related_name='symbol_list', blank=True)
     initial_capital = models.DecimalField(max_digits=20, decimal_places=4, blank=True, null=True)
     strategy = models.ForeignKey(Strategy, on_delete=models.CASCADE)
     strategy_parameters = JSONField(default={})
@@ -50,14 +51,17 @@ class Backtest(models.Model):
             'model': self.strategy_parameters
         }
 
+    @property
     def get_data_handler(self):
         if self.strategy.use_hft:
             return HistoricHFTDataHandler
         return HistoricDataHandler
 
+    @property
     def get_execution_handler(self):
         return SimulatedExecutionHandler
 
+    @property
     def get_strategy(self):
         if self.strategy.name == 'MLForecast':
             return MLForecast
@@ -66,20 +70,25 @@ class Backtest(models.Model):
         elif self.strategy.name == 'IntradayOLSMRStrategy':
             return IntradayOLSMRStrategy
 
+    @property
     def get_portfolio(self):
         if self.strategy.use_hft:
             return PortfolioHFT
         return Portfolio
 
+    @property
+    def get_ticker_list(self):
+        return [t.ticker for t in self.symbol_list.all()]
+
     def create_backtest(self):
         backtest = bt(
-            symbol_list=self.symbol_list,
+            symbol_list=self.get_ticker_list,
             initial_capital=float(self.initial_capital),
             heartbeat=0.0,
-            data_handler=self.get_data_handler(),
-            execution_handler=self.get_execution_handler(),
-            portfolio=self.get_portfolio(),
-            strategy=self.get_strategy(),
+            data_handler=self.get_data_handler,
+            execution_handler=self.get_execution_handler,
+            portfolio=self.get_portfolio,
+            strategy=self.get_strategy,
             custom_parameters=self.create_backtest_parameters(),
         )
         return backtest
