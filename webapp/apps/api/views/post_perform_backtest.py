@@ -52,9 +52,7 @@ class PostPerformBacktestView(APIView):
         data_end_date,
         portfolio_start_date):
 
-        #symbol_list = json.loads(symbol_list)
         symbol_list = self.get_symbol_list(json.loads(symbol_list))
-        print("HERE: ", symbol_list)
         strategy_obj = Strategy.objects.all().filter(name=strategy).first()
         strategy_parameters = json.loads(strategy_parameters)
         data_start_date = datetime.datetime.strptime(data_start_date, "%Y-%m-%d")
@@ -64,7 +62,6 @@ class PostPerformBacktestView(APIView):
         backtest = Backtest(
             account=request.user,
             name=name,
-            #symbol_list=symbol_list,
             initial_capital=initial_capital,
             strategy=strategy_obj,
             strategy_parameters=strategy_parameters,

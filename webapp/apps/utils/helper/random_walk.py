@@ -1,9 +1,9 @@
 import numpy as np
 
-def bounded_random_walk(length, lower_bound,  upper_bound, start, end, std):
+def bounded_random_walk(length, lower_bound,  upper_bound, start, end, std, seed=314):
 	assert (lower_bound <= start and lower_bound <= end)
 	assert (start <= upper_bound and end <= upper_bound)
-
+	np.random.seed(seed)
 	bounds = upper_bound - lower_bound
 
 	rand = (std * (np.random.random(length) - 0.5)).cumsum()
