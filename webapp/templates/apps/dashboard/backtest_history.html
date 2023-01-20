@@ -49,9 +49,9 @@ Backtest
                                     <div class="form-group mt-3 mb-0">
                                         <label>Equities</label>
                                         <select class="form-control select2-search-disable">
-                                            <option value="BTC" selected>Bitcoin</option>
-                                            <option value="ETH">Ethereum</option>
-                                            <option value="LTC">litecoin</option>
+                                            {% for s in symbols %}
+                                            <option value="{{s.ticker}}">{{s.ticker}}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@ Backtest
                                     <tr>
                                         <td>{{backtest_result.created_date}}</td>
                                         <td>{{backtest_result.backtest.strategy.name}}</td>
-                                        <td>{{backtest_result.backtest.symbol_list}}</td>
+                                        <td>{{backtest_result.backtest.get_ticker_list}}</td>
                                         <td>{{backtest_result.total_return}}</td>
                                         <td>{{backtest_result.sharpe_ratio}}</td>
                                         <td>{{backtest_result.max_drawdown}}</td>
