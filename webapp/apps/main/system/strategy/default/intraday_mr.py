@@ -6,7 +6,7 @@ from main.system.strategy.strategy import Strategy
 
 class IntradayOLSMRStrategy(Strategy):
 	"""
-	CUses ordinary least squares (OLS) to perform a rolling linear
+	Uses ordinary least squares (OLS) to perform a rolling linear
 	regression to determine the hedge ratio between a pair of equities.
 	The z-score of the residuals time series is then calculated in a
 	rolling fashion and if it exceeds an interval of thresholds

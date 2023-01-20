@@ -25,7 +25,7 @@
   <div class="card-body">
       <p class="text-muted mb-0">Stock Selection</p>
       <div class="row" id="backtest-stock-selection">
-          {% for i in backtest_selected_strategy.number_stocks_range %}
+          {% for i, stock in selected_stocks.items %}
           <div class="col-sm-4">
               <div class="card mini-stats-wid">
                   <div class="card-body">
@@ -34,9 +34,10 @@
                               <i class="mdi mdi-bitcoin h2 text-warning mb-0"></i>
                           </div>
                           <div class="flex-grow-1" id="selected-stock-{{i}}" data-ticker="{{selected_stocks|get_item:i}}">
-                              <p class="text-muted mb-2">{{selected_stocks|get_item:i}}</p>
-                              <h5 class="mb-0">price <span class="font-size-14 text-muted">= ${{backtest_selected_stock_0.adj_close_price}}</span></h5>
-                              <a data-bs-toggle="modal" data-bs-target=".backtestStockPickerModal" data-bs-stock-index="{{i}}">(modify)</a>
+                              <p class="text-muted mb-0">{{stock}}</p>
+                              <p class="text-muted mb-0 font-size-10">Updated date: {{stock.get_latest_daily_price.price_date}}</p>
+                              <p class="text-muted mb-0 font-size-10">Adj Close Price: ${{stock.get_latest_daily_price.adj_close_price}}</p>
+                              <span class="mb-0 font-size-10"><a data-bs-toggle="modal" data-bs-target=".backtestStockPickerModal" data-bs-stock-index="{{i}}">(modify)</a></span>
                           </div>
                       </div>
                   </div>

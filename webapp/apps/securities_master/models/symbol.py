@@ -1,5 +1,7 @@
 import uuid
+
 from django.db import models
+
 from .exchange import Exchange
 
 class Symbol(models.Model):
@@ -13,5 +15,8 @@ class Symbol(models.Model):
     created_date = models.DateTimeField("created date", auto_now_add=True)
     last_updated_date = models.DateTimeField("last updated date", auto_now=True)
 
+    @property
+    def get_latest_daily_price(self):
+        return self.daily_price.all().order_by('-price_date').first()
     def __str__(self):
         return f"{self.ticker}"
