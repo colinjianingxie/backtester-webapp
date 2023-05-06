@@ -12,8 +12,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        #create_superuser = input("Create superuser? y/N ")
-        create_superuser = "y"
+        create_superuser = input("Create superuser? y/N ")
         if create_superuser == "y" or create_superuser == "Y":
+            """
+            Add another superuser here...
+            """
+            save_superuser("admin", "admin@gmail.com", "Password1234!")
             save_superuser("colinjianingxie", "colinjianingxie@gmail.com", "Password1234!")
-            save_superuser("calvinxie", "calvinjxie@gmail.com", "Password1234!")
