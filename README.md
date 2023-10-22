@@ -63,4 +63,4 @@ There are still many unfinished business for this project. Here's a list of high
 5. Parameter tuning for transactions
 
 ### Author
-Jianing (Colin) Xie, developed 2023
+Jianing (Colin) Xie & Calvin Xie, developed 2023
